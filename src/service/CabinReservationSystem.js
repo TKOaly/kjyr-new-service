@@ -1,4 +1,4 @@
-const EventFeeder = require('../controllers/eventFeeder');
+const EventFeeder = require('../controllers/EventFeeder');
 const moment = require('moment');
 
 var self;
