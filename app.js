@@ -6,6 +6,8 @@ const DB = require('./src/database');
 const Logger = require('./src/utils/logger');
 const app = express();
 
+require('dotenv').config();
+
 global.Backend = {};
 Backend.Logger = new Logger();
 Backend.Config = require('./src/config/config.js');
@@ -44,7 +46,7 @@ app.use(session({
   store: sessionStore,
   saveUninitialized: true,
   resave: false,
-  secret: 'oispa kaljaa',
+  secret: process.env.KJYR_COOKIE_SECRET,
   cookie: {
     secure: false,
     maxAge: 120 * 60000
@@ -70,7 +72,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(process.env.NODE_ENV === 'production' ? 80 : process.env.KJYR_DBG_PORT, () => {
   Backend.Logger.log('Server started!', 'info');
 });
 
