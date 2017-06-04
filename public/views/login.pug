@@ -1,0 +1,29 @@
+html
+  head
+    link(rel="stylesheet", href="css/style.css")
+    link(rel="stylesheet" href="css/bulma.css")
+    meta(name='viewport', content='width=device-width, minimum-scale=1.0')
+    title= 'KJYR - Hallinta'
+  body
+    include components/navbar.pug
+    .container
+      .box
+        if adminMessage != undefined
+          p(style="color: red")=adminMessage
+        h1(class="title is-3")=locale.log_in
+        form(action='/admin', method='post' id="loginForm")
+          label(for='username')=locale.login_username
+          input(class="input" type='text', name='username', value='', tabindex='0', accesskey='u' required)
+          br
+          label(for='passwd')=locale.login_password
+          input(class="input" type='password', name='passwd', size='20', maxlength='32', tabindex='0' required)
+          br
+          br
+          button(class="button" type='submit')=locale.log_in_button
+          br
+          br
+          button(class="button" type='reset')=locale.login_clear_button
+    include components/footer.pug
+    script.
+      document.getElementById('loginForm').setAttribute('action', '/admin?jsEnabled');
+

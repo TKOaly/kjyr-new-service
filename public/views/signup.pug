@@ -1,0 +1,31 @@
+html
+  head
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet" href="/css/bulma.css")
+    meta(name='viewport', content='width=device-width, minimum-scale=1.0')
+    title= 'KJYR - Ilmoittautuminen'
+  body
+    include components/navbar.pug
+    .container
+      if message != null
+        .notification.is-danger=message
+      progress(class="progress is-info is-large" value=((nStep / 6) * 100) max=100)
+      .box
+        if nStep > 1
+          a(class="button is-danger" href='/ilmo/' + (nStep == 1 ? 1 : nStep - 1))=locale.back_button
+        br
+        - // https://github.com/pugjs/pug/issues/1312 pls
+          if nStep == 1
+            include steps/1.pug
+          else if nStep == 2
+            include steps/2.pug
+          else if nStep == 3
+            include steps/3.pug
+          else if nStep == 4
+            include steps/4.pug
+          else if nStep == 5
+            include steps/5.pug
+          else if nStep == 6
+            include steps/6.pug
+    include components/footer.pug
+

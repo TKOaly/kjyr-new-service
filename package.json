@@ -1,0 +1,30 @@
+{
+  "name": "KJYRilmo",
+  "description": "oispa",
+  "authors": "hugeli",
+  "version": "1.0.0",
+  "main": "pathToMain",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "1.17.1",
+    "dotenv": "^4.0.0",
+    "express": "4.15.2",
+    "express-mysql-session": "1.2.0",
+    "express-session": "1.15.1",
+    "moment": "2.17.1",
+    "mysql": "2.13.0",
+    "pug": "^2.0.0-beta11",
+    "sequelize": "3.30.2",
+    "winston": "^2.3.1",
+    "ws": "2.2.3"
+  },
+  "devDependencies": {
+    "needle": "1.6.0",
+    "mocha": "3.2.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha",
+    "create-admin": "node ./scripts/create_admin_user.js"
+  }
+}

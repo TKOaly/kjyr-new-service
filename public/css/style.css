@@ -1,0 +1,370 @@
+body {
+  font-family: "Helvetica", "Arial", "Bitstream Vera Sans", sans-serif;
+  margin: 0 auto;
+}
+
+div.container {
+  padding: 20px;
+}
+
+.frontpage-hero {
+  background-color: red;
+}
+
+.nav-item {
+  color: white;
+}
+
+.cabin-div {
+  width: 300px;
+  height: 200px;
+  margin: 10px;
+}
+
+.hero-box {
+  width: 100%;
+  float: right;
+  color: white;
+  padding: 40px;
+  border-radius: 15px;
+  background-color: rgba(1, 1, 1, 0.6);
+}
+
+.table th {
+  font-size: 10px;
+  padding: 0px;
+}
+
+.date {
+  width: 20px;
+}
+
+@media (max-width:1000px) {
+  .table td, .table th {
+    border: 1px solid #dbdbdb;
+    border-width: 0 0 1px;
+    padding: 0px;
+    vertical-align: top;
+  }
+  .box {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    display: block;
+    padding: 0;
+  }
+}
+
+.preference {
+  width: 50px;
+}
+
+div.eula {
+  margin-bottom: 20px;
+  margin-top: 25px;
+  font-size: small;
+}
+
+div.language {
+  font-size: 10px;
+}
+
+div.leftstarttime {
+  float: left;
+  width: 8em;
+}
+
+div.rightstarttime {
+  margin-left: 6em;
+  padding-left: .5em;
+  width: 30em;
+}
+
+div.login {
+  width: 80%;
+  float: left;
+}
+
+div.login input {
+  width: 20em;
+  margin-left: 0.4em;
+}
+
+div.login label {
+  display: block;
+  text-align: right;
+  float: left;
+  width: 8em;
+}
+
+div.login button {
+  clear: both;
+  margin-left: 6em;
+  width: 7em;
+  height: 2em;
+}
+
+div.studorg {
+  width: 35em;
+}
+
+div.studorg input {
+  float: left;
+  width: 20em;
+  margin-left: 0.4em;
+}
+
+div.studorg label {
+  display: block;
+  text-align: right;
+  float: left;
+  width: 10em;
+}
+
+div.studorg button {
+  clear: both;
+  margin-left: 6em;
+  width: 8em;
+  height: 2em;
+  margin-top: 0.5em;
+}
+
+div.cruise {
+  width: 40em;
+}
+
+div.cruise input {
+  display: block;
+  float: left;
+  width: 24em;
+  margin-left: 0.4em;
+  margin-bottom: 0.1em;
+}
+
+div.cruise label {
+  display: block;
+  text-align: right;
+  float: left;
+  width: 14em;
+}
+
+div.cruise button {
+  clear: both;
+  margin-left: 6em;
+  width: 8em;
+  height: 2em;
+  margin-top: 0.5em;
+}
+
+div.admin_content {
+  width: 1000px;
+  float: left;
+  background-color: white;
+  padding: 10px 25px 10px 25px;
+  border: 2px solid black;
+  margin-top: 15px;
+  margin-left: 40px;
+  margin-bottom: 15px;
+  -moz-border-radius: 7px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+}
+
+div.admin_message {
+  margin-left: 0.5em;
+  float: left;
+  text-align: left;
+  font-size: 13px;
+  width: 65%;
+}
+
+div.language form fieldset {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.participants {
+  width: 96%;
+}
+
+div.participants form fieldset {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.participants button.delete_button {
+  height: 1.6em;
+  width: 6em;
+}
+
+div.participants button.update_button {
+  height: 1.6em;
+  width: 5em;
+}
+
+div.participant_deletebutton {
+  width: 5.3em;
+  float: left;
+}
+
+div.participant_firstname {
+  width: 7.5em;
+  float: left;
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_lastname {
+  width: 10.5em;
+  float: left;
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_daymonth {
+  width: 2em;
+  float: left;
+  -webkit-transform: rotate(-40deg);
+  -moz-transform: rotate(-40deg);
+  -ms-transform: rotate(-40deg);
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_year {
+  width: 3.2em;
+  padding-left: 1em;
+  float: left;
+  -webkit-transform: rotate(-40deg);
+  -moz-transform: rotate(-40deg);
+  -ms-transform: rotate(-40deg);
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_email {
+  width: 10.7em;
+  float: left;
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_studorg {
+  width: 5.8em;
+  float: left;
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_cabin {
+  width: 6.5em;
+  float: left;
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_guardian {
+  width: 2em;
+  padding-left: 0.7em;
+  float: left;
+  -webkit-transform: rotate(-40deg);
+  -moz-transform: rotate(-40deg);
+  -ms-transform: rotate(-40deg);
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div.participant_nationality {
+  width: 3em;
+  padding-left: 2em;
+  float: left;
+  -webkit-transform: rotate(-40deg);
+  -moz-transform: rotate(-40deg);
+  -ms-transform: rotate(-40deg);
+  font-size: small;
+  font-family: "Courier New", Courier, monospace;
+}
+
+input.firstname {
+  width: 6.5em;
+}
+
+input.lastname {
+  width: 10em;
+}
+
+input.daymonth {
+  width: 1.5em;
+}
+
+input.year {
+  width: 3em;
+}
+
+input.email {
+  width: 10em;
+}
+
+input.studorg {
+  width: 5em;
+}
+
+input.guardian {
+  width: 1em;
+}
+
+#div.participant button.update {
+  # width: 5em;
+  # font-size: 10px;
+  #
+}
+
+table.stats {
+  width: 100%;
+}
+
+table.stats th {
+  text-align: left;
+}
+
+a:visited {
+  color: #0000fa;
+}
+
+select.lang {
+  font-size: 10px;
+}
+
+select.cabin {
+  width: 7em;
+}
+
+select.nationality {
+  width: 8.2em;
+}
+
+.arrow-down {
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 32px 0 32px;
+  border-color: rgba(1, 1, 1, 0.3) transparent transparent transparent;
+  position: relative;
+  bottom: 0;
+}
+
+.bsat {
+  display: block;
+}
+
+.bsat p.text span::after {
+  position: relative;
+  content: 'Created with ❤️ by Hugo Holmqvist'
+}
+
+.bsat:hover p.text span:after {
+  content: 'Created with 💉, 💦 and 😭 by Hugo Holmqvist';
+}

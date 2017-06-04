@@ -1,0 +1,291 @@
+html
+  head
+    title KJYR - Hallinta
+    link(rel="stylesheet", href="css/bulma.css")
+    link(rel="stylesheet" href="css/style.css")
+    script(type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js")
+    link(href="/css/datepicker.css" rel="stylesheet")
+    script(type="text/javascript" src="/js/datepicker.js")
+    meta(name='viewport', content='width=device-width, minimum-scale=1.0')
+    script(type="text/javascript")='$.fn.datepicker'
+  body
+  include components/navbar
+  .container
+    .box
+      p(style="color: red")=adminMessage
+      form(action='/session?purge=true' method='post')
+        button(class="button is-danger" type='submit')=locale.log_out_button
+      if studOrgs && studOrgs.length > 0
+        .studorg(id='studorg_' + studOrgs[0].name)
+      if isAdmin
+        - let postURI = '/api/cruise/?vanilla=true'
+        .box
+          h1(class="title is-5")=locale.admin_cruise
+          form(action=postURI method='post')
+            label=locale.admin_cruise
+            input(class="input" type='text' name='ship' value=cruise.ship)
+            br
+            label=locale.admin_cruise_departure
+            - let date = moment(cruise.departure1).format('DD/MM/YYYY HH:mm');
+            input(class="input" type='text' name='departure1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            br
+            label=locale.admin_cruise_arrival
+            - date = moment(cruise.arrival1).format('DD/MM/YYYY HH:mm');
+            input(class="input" type='text' name='arrival1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)  
+            br
+            label=locale.admin_cruise_departure
+            - date = moment(cruise.departure2).format('DD/MM/YYYY HH:mm');
+            input(class="input" type='text' name='departure2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            br
+            label=locale.admin_cruise_arrival
+            - date = moment(cruise.arrival2).format('DD/MM/YYYY HH:mm');
+            input(class="input" type='text' name='arrival2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)   
+            br                    
+            button(class="button is-success" type='submit')=locale.admin_form_submit
+            br
+            br
+            button(class="button is-danger" type='reset')=locale.admin_form_reset    
+      each studOrg in studOrgs
+        - let postURI = '/api/studorgs/' + studOrg.id + '?vanilla=true'
+        .box
+          h1(class="title is-5")=studOrg.name
+          form(action=postURI method='post')
+            label=locale.admin_contact_email
+            input(class="input" type='text' name='contact_email' value=studOrg.email)
+            br
+            label=locale.admin_contact_telephone
+            input(class="input" type='text' name='contact_telephone' value=studOrg.phone)
+            br
+            label=locale.admin_ilmo_start
+            - let date = moment(studOrg.ilmo_start).format('DD/MM/YYYY HH:mm');
+            input(class="input" type='text' name='ilmo_start' pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            br
+            label=locale.admin_guardian_quota
+            if isAdmin
+              input(class="input" type='number' name='guardian_quota' value=studOrg.guardianQuota)
+            else                            
+              input(class="input" type='number' name='guardian_quota' readonly='readonly' value=studOrg.guardianQuota)
+            br
+            label=locale.admin_cabin_quota
+            if isAdmin
+              input(class="input" type='number' name='cabin_quota' value=studOrg.quota)
+            else
+              input(class="input" type='number' name='cabin_quota' readonly='readonly' value=studOrg.quota)
+            br
+            button(class="button is-success" type='submit')=locale.admin_form_submit
+            br
+            br
+            button(class="button is-danger" type='reset')=locale.admin_form_reset
+      if isAdmin
+        .box
+          h1(class="title is-5")='Add new student organization'
+          form(action='/api/studorgs?vanilla=true' method='post')
+            label='Nimi'
+            input(class="input" type='text' name='name' )
+            br
+            label=locale.admin_contact_email
+            input(class="input" type='text' name='contact_email' )
+            br
+            label=locale.admin_contact_telephone
+            input(class="input" type='text' name='contact_telephone')
+            br
+            label=locale.admin_ilmo_start
+            - let ph = locale.dob.split('(')[1].split(')')[0];
+            input(class="input" type='text' name='ilmo_start' pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" required placeholder=ph)
+            br
+            label=locale.admin_guardian_quota
+            input(class="input" type='number' name='guardian_quota')
+            br
+            label=locale.admin_cabin_quota
+            input(class="input" type='number' name='cabin_quota')
+            br
+            lable='Yhden kokonaisen hytin hinta'
+            input(class="input" type='number' name='cabin_price')
+            br
+            label=locale.login_password
+            input(class="input" type='text' name='admin_password')
+            br
+            button(class="button is-success" type='submit')=locale.admin_form_submit
+            br
+            br
+            button(class="button is-danger" type='reset')=locale.admin_form_reset
+        br
+        br
+        each preference in preferences
+          - let postURI = '/api/preferences/' + preference.id + '?vanilla=true';
+          .box
+            form(action=postURI method="post")
+              label='Nimi'
+              input(class="input" type='text' name='name' value=preference.name)
+              br
+              label='Kuvaus'
+              input(class="input" type='text' name='description' value=preference.description)
+              br
+              label='Hinta'
+              input(class="input" type='number' name='price' value=preference.price)
+              br
+              button(class="button is-success" type='submit')=locale.admin_form_submit
+              br
+              br
+              button(class="button is-danger" type='reset')=locale.admin_form_reset             
+        .box           
+          h1(class="title is-5")='Add new cruise preference'
+          form(action="/api/preferences?vanilla=true" method="post")
+            label='Nimi'
+            input(class="input" type='text' name='name')
+            br
+            label='Kuvaus'
+            input(class="input" type='text' name='description')
+            br
+            label='Hinta'
+            input(class="input" type='number' name='price')
+            br
+            button(class="button is-success" type='submit')=locale.admin_form_submit
+            br
+            br
+            button(class="button is-danger" type='reset')=locale.admin_form_reset
+      if !jsEnabled
+        .box(style="overflow: scroll")
+          h4(class="title is-5")='Persons'
+          table(class="table")
+            tr
+              th!=locale.admin_participant_firstname
+              th!=locale.admin_participant_lastname
+              th=locale.dob
+              th!=locale.admin_participant_email
+              if isAdmin
+                th!=locale.admin_participant_studorg
+              th!=locale.admin_participant_cabin
+              th!=locale.preference
+              th!=locale.admin_participant_guardian
+              th!=locale.admin_participant_nationality
+            each val, key in cabins
+              each person in val.persons
+                - let postURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '?vanilla=true'
+                tr
+                  form(action=postURI method="post")
+                    td
+                      input(type="text" class="input firstname" name="firstname" value=person.firstname)
+                    td
+                      input(type="text" class="input firstname"  name="lastname" value=person.lastname)
+                    td
+                      - let date = moment(person.dob).format('DD/MM/YYYY');
+                      input(data-toggle='datepicker' name="dob" class="input firstname" value=date type="text" id="datepicker")
+                      noscript
+                        input(class="daymonth" type="text" name="day" placeholder="Day" value="" + date.split('/')[0] required)
+                        input(class="daymonth" type="text" name="month" placeholder="Month" value="" + date.split('/')[1] required)
+                        input(class="year" type="text" name="year" placeholder="Year" value="" + date.split('/')[2] required)
+                        style='#datepicker { display: none; } "'
+                    td
+                      input(type="text" class="input email" name="email" value=person.email)
+                    if isAdmin
+                      td
+                        - let studorg = studOrgs.filter(org => org.id === person.studorgId)[0];
+                        - let studorgValue = `${studorg.id} (${studorg.name}`;
+                        select(name="studorg" class="select preference")
+                          each studorg in studOrgs
+                            if person.studorgId == studorg.id 
+                              option(value=studorg.id selected)=studorg.name
+                            else
+                              option(value=studorg.id)=studorg.name
+                    td
+                      select(name="cabin" class="select participant_cabin" style="width: 6.5em;")
+                        each childVal, childKey in cabins
+                          - let str = childKey + ' (' + childVal.persons.map(p => p.lastname).join(', ') + ') ' + studOrgs.filter(s => s.id === childVal.studorgId)[0].name
+                            if person.cabinId == childVal.id
+                              option(value=childVal.id selected)=str
+                            else
+                              option(value=childVal.id)=str
+                    td
+                      select(name="preference" class="select preference")
+                        each preference in preferences
+                          if preference.id == person.preferenceId
+                            option(value=preference.id selected)=preference.name
+                          else
+                            option(value=preference.id)=preference.name
+                    td
+                      input(type="checkbox" name="guardian" value="1")
+                    td
+                      select(name="nationality" class="select preference")
+                        each countryVal, countryKey in config.countries
+                          - let text = countryKey + ' (' + countryVal + ')'
+                          if countryKey == person.nationality
+                            option(value=countryKey selected)=text
+                          else
+                            option(value=countryKey)=text
+                    td
+                      button(class="button is-success" type="submit" name="person_id" value=person.id class="update_button")=locale.admin_form_submit
+      else
+        .columns
+          .column(style="height: 100%; overflow: auto;" class="is-half")
+            nav(class="panel")
+              p(class="panel-heading")='Persons'
+              each val, key in cabins
+                each person in val.persons
+                  p(class="panel-block" style="cursor: pointer" onclick="showForm(" + person.id + ")")=person.firstname + ' ' + person.lastname
+          .column(style="height: 100%; overflow: auto;" class="is-half")
+            .box
+              each val, key in cabins
+                each person in val.persons
+                  - let postURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '?vanilla=true'
+                    form(action=postURI method="post" id="form" + person.id style="display: none")
+                      .field
+                        label(class="label")!=locale.admin_participant_firstname
+                        input(type="text" class="input" name="firstname" value=person.firstname)
+                      .field
+                        label(class="label")!=locale.admin_participant_lastname
+                        input(type="text" class="input"  name="lastname" value=person.lastname)
+                      .field
+                        label(class="label")=locale.dob                    
+                        - let date = moment(person.dob).format('DD/MM/YYYY');
+                        input(data-toggle='datepicker' name="dob" class="input firstname" value=date type="text" id="datepicker")
+                      .field
+                        label(class="label")!=locale.admin_participant_email
+                        input(type="text" class="input" name="email" value=person.email)
+                      if isAdmin
+                        .field
+                          label(class="label")!=locale.admin_participant_studorg
+                          - let studorg = studOrgs.filter(org => org.id === person.studorgId)[0];
+                          - let studorgValue = `${studorg.id} (${studorg.name}`;
+                          select(name="studorg" class="select")
+                            each studorg in studOrgs
+                              if person.studorgId == studorg.id 
+                                option(value=studorg.id selected)=studorg.name
+                              else
+                                option(value=studorg.id)=studorg.name
+                      .field
+                        label(class="label")!=locale.admin_participant_cabin                 
+                        select(name="cabin" class="select")
+                          each childVal, childKey in cabins
+                            - let str = childKey + ' (' + childVal.persons.map(p => p.lastname).join(', ') + ') ' + studOrgs.filter(s => s.id === childVal.studorgId)[0].name
+                              if person.cabinId == childVal.id
+                                option(value=childVal.id selected)=str
+                              else
+                                option(value=childVal.id)=str
+                      .field
+                        label(class="label")!=locale.preference
+                        select(name="preference" class="select")
+                          each preference in preferences
+                            if preference.id == person.preferenceId
+                              option(value=preference.id selected)=preference.name
+                            else
+                              option(value=preference.id)=preference.name
+                      .field
+                        label(class="label")!=locale.admin_participant_guardian  
+                        input(type="checkbox" name="guardian" value="1")
+                      .field
+                        label(class="label")!=locale.nationality 
+                        select(name="nationality" class="select")
+                          each countryVal, countryKey in config.countries
+                            - let text = countryKey + ' (' + countryVal + ')'
+                            if countryKey == person.nationality
+                              option(value=countryKey selected)=text
+                            else
+                              option(value=countryKey)=text
+                      br
+                      br
+                      button(class="button is-success" type="submit" name="person_id" value=person.id class="update_button")=locale.admin_form_submit
+
+  script.
+    $('[data-toggle="datepicker"]').datepicker();    
+  script(type="text/javascript" src="/js/personlist.js")

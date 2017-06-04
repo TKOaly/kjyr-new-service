@@ -1,0 +1,35 @@
+h1(class="title is-3")=locale.step2_title
+p=locale.step2_para1
+p!=locale.cabin_selection_info
+  form(method="POST", action="/ilmo/4")
+    div
+    div(class="tile is-ansestor" style="flex-wrap: wrap")
+      each val in cabinStudorgs
+        div(class="tile is-4")
+          .cabin-div
+            .box(id=val.id style="overlflow: scroll;" persons=Number(val.persons.length) + reservations(val.id))
+              label(class="radio")=locale.cabin + ' ' + val.id
+                if val.persons.length < 4
+                  input(type='radio' name='cabnum' id="radio" + val.id value=val.id)
+                else
+                  input(type='radio' name='cabnum' id="radio" + val.id disabled)
+              br
+              tag(class="tag is-info")
+                b=((val.price / 100) / 4)  + '€/hlö.'
+              br
+              br
+              ol
+                if val.persons.length === 0
+                  span(class="tag is-warning" id="empty" + val.id)=locale.admin_participant_empty_cabin
+                each person in val.persons
+                  if person.notCompleted === true
+                    span(class="tag is-success" id="personTag" + person.reservationUUID)=person.firstname + ' ' + person.lastname
+                  else
+                    span(class="tag" id="personTag" + person.reservationUUID)=person.firstname + ' ' + person.lastname
+    input(type="submit" value=locale.next class="button")
+- let newCabinAction = `/api/studorgs/${studOrg}/cabins?vanilla=true&redir=/ilmo`;
+form(action=newCabinAction method="POST")
+  input(type="submit" value=locale.new_cabin class="button") 
+.eula
+  p=locale.registration_eula
+script(type="text/javascript" src="/js/cabinfeed.js")

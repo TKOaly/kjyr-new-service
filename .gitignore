@@ -1,0 +1,5 @@
+old/*
+node_modules/*
+.vscode/
+admin_user.txt
+logs/

@@ -1,0 +1,20 @@
+.language
+    form#languageForm(action='/', method='post')
+        fieldset.languageSelect
+            label(for='languageSelect') Language: 
+            select#languageSelect.lang(name='languageSelect', onchange='this.form.submit();')
+                if (userLanguage == "fi")
+                    option(value='fi' selected="selected") Finnish
+                else
+                    option(value='fi') Finnish
+
+                if (userLanguage == "en")
+                    option(value='en' selected="selected") English
+                else
+                    option(value='en') English
+            
+                if (userLanguage == "se")
+                    option(value='se' selected="selected") Swedish
+                else
+                    option(value='se') Swedish
+            input(type='image', src='/img/1pixtr.gif', name='image')

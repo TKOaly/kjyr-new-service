@@ -1,0 +1,80 @@
+html
+  head
+    link(rel="stylesheet", href="css/style.css")
+    link(rel="stylesheet" href="css/bulma.css")
+    meta(name='viewport', content='width=device-width, minimum-scale=1.0')
+    script(src="https://dansup.github.io/bulma-templates/js/bulma.js")
+    title= 'KJYR - Ilmoittautuminen'
+  body
+    section(class="hero is-fullheight frontpage-hero is-info")
+      .hero-head
+        header.nav
+          .container
+            .nav-left
+              a.nav-item
+                h1(class="title is-3" style="color: white;")="KJYR '" + config.year_abbreviation
+            span.nav-toggle(id="nav-toggle")
+              span
+              span
+              span
+            .nav-right.nav-menu(id="nav-menu")
+              a(class="nav-item" href="#info" style="color: white")='Tietoja'
+              a(class="nav-item" href="/ilmo" style="color: white")=locale.index_reg_link
+              a(class="nav-item" href="/stats" style="color: white")=locale.index_stat_link
+              div(class="nav-item")
+                include components/language.pug
+      .hero-body
+        div(style="text-align: center; padding-top: 5%; margin: 0 auto;")
+          h1(class="title is-2" style="color: white;")='KJYR'
+          h1(class="title is-3" style="color: yellow;")=locale.index_cruise_name
+          a(href="#info" style="text-align: center;")
+            div(class="arrow-down")
+    .container
+      nav(class="level" style="margin-bottom: 5%; down: 0px;")
+        div(class="level-item has-text-centered")
+          .div
+            p(class="heading")=locale.stats_participants
+            p(class="title")=stats.participants
+        div(class="level-item has-text-centered")
+          .div
+            p(class="heading")=locale.stats_studorg
+            p(class="title")=stats.studorgs      
+      div(class="box" id="info")
+        p!= locale.index_para1
+        p!= locale.index_para2
+        p!= locale.index_para3
+        p!= locale.index_para4
+        p!= locale.index_para5
+        - var now = Date.now();
+        if (now > config.ilmo_end)
+          p(style='color: red')
+            strong= locale.registration_ended
+        else
+          if (now < config.ilmo_end && now >= config.ilmo_start)
+            a(href='/ilmo', style='font-weight: bold')= locale.index_reg_link
+            br
+        if (now < config.ilmo_end)
+          p(style='color: blue;')
+            strong= locale.index_para6
+          each studOrg in studOrgs
+            .leftstarttime=studOrg.name
+              br
+            - var formated_date = new Date(studOrg.ilmo_start);
+            - formated_date = formated_date.toString().substr(0, formated_date.toString().indexOf('GMT'));
+            .rightstarttime=formated_date
+        p(style='font-size: smaller;')
+          a(href='/stats')=locale.index_stat_link
+    include components/footer.pug
+
+script(type='text/javascript').
+  document.getElementById("nav-toggle").addEventListener ("click", toggleNav);
+  function toggleNav() {
+  var nav = document.getElementById("nav-menu");
+  var className = nav.getAttribute("class");
+  if(className == "nav-right nav-menu") {
+    nav.className = "nav-right nav-menu is-active";
+  } else {
+    nav.className = "nav-right nav-menu";
+  }
+  }
+

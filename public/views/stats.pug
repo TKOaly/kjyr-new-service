@@ -1,0 +1,45 @@
+html
+  head
+    link(rel="stylesheet", href="css/style.css")
+    link(rel="stylesheet" href="css/bulma.css")
+    meta(name='viewport', content='width=device-width, minimum-scale=1.0')
+    title= 'KJYR - Ilmoittautuminen'
+  body
+    include components/navbar.pug
+    .container
+      .box(style="overflow: auto;")
+        h1(class="title is-3")= locale.stats_summary
+        span=locale.stats_total + stats.cruiseOrg.attendantCount
+        br
+        span=locale.stats_berths_total + stats.cruiseOrg.totalFreeSlots
+        br
+        span=locale.stats_used + Math.round((stats.cruiseOrg.attendantCount / stats.cruiseOrg.totalFreeSlots) * 100) + '%'
+        br
+        br
+        h4(class="title is-4")= locale.stats_by_studorg
+        table(class='table')
+          tr
+            th=locale.stats_organization
+            th=locale.stats_participants
+            th=locale.stats_berths
+            th=locale.stats_under + config.agelimit + locale.stats_years_abbrev
+            th=locale.stats_under + config.agelimit + locale.stats_years_abbrev 
+            th=locale.stats_guardians
+          each val, key in stats.studOrgs
+            tr
+              td=key
+              td=val.attendantCount
+              td=val.totalFreeSlots
+              td=val.usersUnderage
+              td= Math.round((val.usersUnderage / val.attendantCount) * 100) + '%'
+              td=val.guardians
+          tr
+            td
+            td=stats.cruiseOrg.attendantCount
+            td=stats.cruiseOrg.totalFreeSlots
+            td=stats.cruiseOrg.usersUnderage
+            td= Math.round((stats.cruiseOrg.usersUnderage / stats.cruiseOrg.attendantCount) * 100) + '%'
+            td=stats.cruiseOrg.guardians
+    include components/footer.pug    
+
+
