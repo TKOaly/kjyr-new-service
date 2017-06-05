@@ -26,7 +26,7 @@ module.exports = {
     production : {
       user : 'mayhem',
       host : 'haba.tko-aly.fi',
-      "pre-setup" : "whoami",
+      "pre-deploy-local" : "whoami", 
       ref  : 'origin/master',
       repo : 'git@gitlab.com:tko-aly/mayhem.git',
       path : '~/mayhem',
