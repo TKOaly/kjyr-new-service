@@ -29,7 +29,7 @@ module.exports = {
       ref  : 'origin/master',
       "pre-deploy-local" : "whoami",
       repo : 'git@gitlab.com:tko-aly/mayhem.git',
-      path : '~/mayhem',
+      path : '/home/mayhem/mayhem',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
