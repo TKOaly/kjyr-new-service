@@ -23,5 +23,7 @@ before_script:
 
 deploy:
   script:
-  - npm install -g pm2
-  - pm2 deploy ecosystem.config.js production
+    - npm install -g pm2
+    - pm2 deploy ecosystem.config.js production
+  only:
+    - master

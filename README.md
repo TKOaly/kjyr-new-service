@@ -1,6 +1,8 @@
 # Mayhem
 
-KJYR registration system.
+KJYR registration system. 
+
+**DON'T PUSH INCOMPLETE STUFF TO MASTER SINCE IT WILL BE DEPLOYED ON THE PRODUCTION SERVER**
 
 ## Setting up a devenv
 
