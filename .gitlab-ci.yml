@@ -1,0 +1,20 @@
+# This file is a template, and might need editing before it works on your project.
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+stages:
+  - test
+  - deploy
+
+test:
+  script:
+    - npm install --dev
+    - nom install -g mocha
+    - npm test
+
+deploy:
+  script:
+  - npm install -g pm2
+  - pm2 deploy ecosystem.config.js production
+
