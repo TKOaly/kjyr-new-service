@@ -27,7 +27,6 @@ module.exports = {
       user : 'mayhem',
       host : 'haba.tko-aly.fi',
       "pre-setup" : "whoami",
-      "ssh_options": ["StrictHostKeyChecking=no", "PasswordAuthentication=no"],
       ref  : 'origin/master',
       repo : 'git@gitlab.com:tko-aly/mayhem.git',
       path : '~/mayhem',
