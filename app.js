@@ -72,7 +72,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(process.env.NODE_ENV === 'production' ? 80 : process.env.KJYR_DBG_PORT, () => {
+app.listen(process.env.NODE_ENV === 'production' ? process.env.KJYR_PROD_PORT : process.env.KJYR_DBG_PORT, () => {
   Backend.Logger.log('Server started!', 'info');
 });
 
