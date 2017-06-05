@@ -27,7 +27,7 @@ module.exports = {
       user : 'mayhem',
       host : 'haba.tko-aly.fi',
       ref  : 'origin/master',
-      repo : 'MergHQ@gitlab.com:tko-aly/mayhem.git',
+      repo : 'git@gitlab.com:tko-aly/mayhem.git',
       path : '~/mayhem',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
