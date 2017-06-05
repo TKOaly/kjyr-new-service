@@ -10,7 +10,7 @@ stages:
 test:
   script:
     - npm install --dev
-    - nom install -g mocha
+    - npm install -g mocha
     - npm test
 
 deploy:
