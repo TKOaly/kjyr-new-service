@@ -216,7 +216,6 @@ module.exports = {
         req.body.dob = dobObj;
         req.body.studOrg = req.session.registration.studOrg;
 
-
         // Check that the email format is fine.
         if (!/.+@.+/.test(req.body.email)) {
           res.redirect('/ilmo');
