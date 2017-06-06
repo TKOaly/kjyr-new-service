@@ -4,7 +4,6 @@ const Person = require('../models/person');
 const moment = require('moment');
 const CabinReservationSystem = require('../service/CabinReservationSystem');
 const cabinReservationSystem = new CabinReservationSystem();
-const createInfomail = require('../service/confirmationEmail');
 
 const respond = require('../utils/response').stepResponse;
 
@@ -335,7 +334,6 @@ module.exports = {
             value: person.id
           });
           cabinReservationSystem.completeRegistration(reg.person);
-          createInfomail(person.email, person, req.session.lang === undefined ? 'fi' : req.session.lang);
         });
         req.session.registration.step = 6;
         res.redirect('/ilmo/' + 6);
