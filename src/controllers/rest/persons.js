@@ -161,6 +161,46 @@ const updatePerson = (req, res) => {
   });
 }
 
+const deletePerson = (req, res) => {
+  if (!req.session.auth) {
+    respond(res, req, 401, null, '/admin');
+    return;
+  }
+  Backend.Dao.person.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(person => {
+    if (!person) {
+      respond(res, req, 404, null, '/admin');
+      return;
+    }
+    
+
+    if (person.studorgId != req.session.auth.studOrg && req.session.auth.studOrg != 0) {
+      respond(res, req, 403, null, '/admin');
+      return;
+    }
+
+    Backend.Dao.person.destroy({
+      where: {
+        id: person.id
+      }
+    }).then(() => {
+      Backend.Logger.rollbackQueryLog(`Person ${person.firstname} ${person.lastname} deleted`, {
+        action: 'delete',
+        tableName: 'persons',
+        oldObject: person.dataValues
+      });
+      respond(res, req, 200, null, '/admin');
+    });
+  }).catch(e => {
+    Backend.Logger.log('Error while deleting person');
+    Backend.Logger.log(e);
+    respond(res, req, 500, null, '/admin');
+  });
+}
+
 /**
  * Since the site uses no client side JS, we'll use a POST endpoint to update 
  * person information. I hope that one day the site will be completely rebuilt
@@ -169,6 +209,8 @@ const updatePerson = (req, res) => {
  */
 route.post('/:id', updatePerson);
 route.patch('/:id', updatePerson);
+route.delete('/:id', deletePerson);
+route.post('/:id/delete', deletePerson);
 
 
 module.exports = route;

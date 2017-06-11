@@ -186,7 +186,48 @@ const updateStudorg = (req, res) => {
   });
 };
 
+const deleteStudorg = (req, res) => {
+  if (!req.session.auth) {
+    respond(res, req, 401, null, '/admin');
+    return;    
+  }
+
+  if (req.session.auth.studOrg != 0) {
+    respond(res, req, 403, null, '/admin');
+    return;
+  }
+  
+  Backend.Dao.studorg.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(studorg => {
+    if (!studorg) {
+      respond(res, req, 404, null, '/admin');
+      return;
+    }
+    Backend.Dao.studorg.destroy({
+      where: {
+        id: studorg.id
+      }
+    }).then(() => {
+      Backend.Logger.rollbackQueryLog(`Admin deleted studorg ${studorg.name}`, {
+        action: 'delete',
+        tableName: 'studorgs',
+        oldObject: studorg.dataValues
+      });
+      respond(res, req, 200, null, '/admin');
+    });
+  }).catch(e => {
+    Backend.Logger.log('Error while deleting studorg');
+    Backend.Logger.log(e);
+    respond(res, req, 500, null, '/admin');
+  });
+}
+
 route.post('/:id', updateStudorg);
 route.patch('/:id', updateStudorg);
+route.delete('/:id', deleteStudorg);
+route.post('/:id/delete', deleteStudorg);
 
 module.exports = route;

@@ -120,6 +120,48 @@ const updatePref = (req, res) => {
   });
 };
 
+
+const deletePreference = (req, res) => {
+  if (!req.session.auth) {
+    respond(res, req, 401, null, '/admin');
+    return;    
+  }
+
+  if (req.session.auth.studOrg != 0) {
+    respond(res, req, 403, null, '/admin');
+    return;
+  }
+  
+  Backend.Dao.preference.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(preference => {
+    if (!preference) {
+      respond(res, req, 404, null, '/admin');
+      return;
+    }
+    Backend.Dao.preference.destroy({
+      where: {
+        id: preference.id
+      }
+    }).then(() => {
+      Backend.Logger.rollbackQueryLog(`Admin deleted preference ${preference.name}`, {
+        action: 'delete',
+        tableName: 'studorgs',
+        oldObject: preference.dataValues
+      });
+      respond(res, req, 200, null, '/admin');
+    });
+  }).catch(e => {
+    Backend.Logger.log('Error while deleting preference');
+    Backend.Logger.log(e);
+    respond(res, req, 500, null, '/admin');
+  });
+}
+
 route.post('/:id', updatePref);
 route.patch('/:id', updatePref);
+route.delete('/:id', deletePreference);
+route.post('/:id/delete', deletePreference);
 module.exports = route;

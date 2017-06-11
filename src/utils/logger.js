@@ -15,6 +15,11 @@ function rollbackQueryGen(query) {
           return `${key} = ${isStr ? '"' + val + '"' : val}`;
         }).join(',');
         return `UPDATE ${query.tableName} SET ${changeString} WHERE ${query.reference} ${query.operation || '='} ${query.value}`
+      case 'delete': {
+        let valueDefinitionString = '(' + Object.keys(query.oldObject).join(', ') + ')';
+        let valueString = '(' + Object.keys(query.oldObject).map(key => query.oldObject[key]).join(', ') + ')';
+        return `INSERT INTO ${query.tableName} ${valueDefinitionString} VALUES ${valueString}`;
+      }
     }
   }
 }

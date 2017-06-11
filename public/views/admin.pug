@@ -44,9 +44,10 @@ html
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
             br
-            button(class="button is-danger" type='reset')=locale.admin_form_reset    
+            button(class="button" type='reset')=locale.admin_form_reset    
       each studOrg in studOrgs
         - let postURI = '/api/studorgs/' + studOrg.id + '?vanilla=true'
+        - let deleteURI = '/api/studorgs/' + studOrg.id + '/delete?vanilla=true'
         .box
           h1(class="title is-5")=studOrg.name
           form(action=postURI method='post')
@@ -78,7 +79,10 @@ html
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
             br
-            button(class="button is-danger" type='reset')=locale.admin_form_reset
+            button(class="button" type='reset')=locale.admin_form_reset
+          if isAdmin
+            form(action=deleteURI method='post')
+              button(class="button is-danger" type="submit")=locale.admin_studorg_delete
       if isAdmin
         .box
           h1(class="title is-5")='Add new student organization'
@@ -110,11 +114,13 @@ html
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
             br
-            button(class="button is-danger" type='reset')=locale.admin_form_reset
+            button(class="button" type='reset')=locale.admin_form_reset
         br
         br
+        h1(class="title is-3")='Preferences'
         each preference in preferences
           - let postURI = '/api/preferences/' + preference.id + '?vanilla=true';
+          - let deleteURI = '/api/preferences/' + preference.id + '/delete?vanilla=true';
           .box
             form(action=postURI method="post")
               label='Nimi'
@@ -129,7 +135,9 @@ html
               button(class="button is-success" type='submit')=locale.admin_form_submit
               br
               br
-              button(class="button is-danger" type='reset')=locale.admin_form_reset             
+              button(class="button" type='reset')=locale.admin_form_reset
+            form(action=deleteURI method="post")
+              button(class="button is-danger" type="submit")=locale.admin_studorg_delete            
         .box           
           h1(class="title is-5")='Add new cruise preference'
           form(action="/api/preferences?vanilla=true" method="post")
@@ -145,7 +153,7 @@ html
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
             br
-            button(class="button is-danger" type='reset')=locale.admin_form_reset
+            button(class="button" type='reset')=locale.admin_form_reset
       if !jsEnabled
         .box(style="overflow: scroll")
           h4(class="title is-5")='Persons'
@@ -164,6 +172,7 @@ html
             each val, key in cabins
               each person in val.persons
                 - let postURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '?vanilla=true'
+                - let deleteURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '/delete?vanilla=true'
                 tr
                   form(action=postURI method="post")
                     td
@@ -217,6 +226,8 @@ html
                             option(value=countryKey)=text
                     td
                       button(class="button is-success" type="submit" name="person_id" value=person.id class="update_button")=locale.admin_form_submit
+                  form(action=deleteURI method="post")
+                    button(class="button is-danger" type="submit")=locale.admin_studorg_delete
       else
         .columns
           .column(style="height: 100%; overflow: auto;" class="is-half")
@@ -230,6 +241,7 @@ html
               each val, key in cabins
                 each person in val.persons
                   - let postURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '?vanilla=true'
+                  - let deleteURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '/delete?vanilla=true'
                     form(action=postURI method="post" id="form" + person.id style="display: none")
                       .field
                         label(class="label")!=locale.admin_participant_firstname
@@ -287,7 +299,9 @@ html
                       br
                       br
                       button(class="button is-success" type="submit" name="person_id" value=person.id class="update_button")=locale.admin_form_submit
-
+                  br
+                  form(action=deleteURI method="post" id="deleteForm" + person.id  style="display: none")
+                    button(class="button is-danger" type="submit")=locale.admin_studorg_delete
   script.
     $('[data-toggle="datepicker"]').datepicker();    
   script(type="text/javascript" src="/js/personlist.js")
