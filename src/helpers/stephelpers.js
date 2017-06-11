@@ -334,6 +334,7 @@ module.exports = {
             value: person.id
           });
           cabinReservationSystem.completeRegistration(reg.person);
+          createInfomail(person.email, person, req.session.lang === undefined ? 'fi' : req.session.lang);
         });
         req.session.registration.step = 6;
         res.redirect('/ilmo/' + 6);
