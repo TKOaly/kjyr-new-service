@@ -1371,7 +1371,7 @@
     autoShow: false,
 
     // Hide the datepicker automatically when picked
-    autoHide: false,
+    autoHide: true,
 
     // Pick the initial date automatically when initialized
     autoPick: false,
