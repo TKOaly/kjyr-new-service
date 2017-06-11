@@ -312,6 +312,7 @@ module.exports = {
           respond(req, res, 403, 'Cabin is full!', '/ilmo/4');
           return;
         }
+        
         const person = {
           firstname: reg.person.firstname,
           lastname: reg.person.lastname,
