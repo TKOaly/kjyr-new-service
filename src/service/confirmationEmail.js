@@ -2,8 +2,6 @@ const locale = require('../config/localization.json');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
 
-moment.locale('fi');
-
 let transporter = nodemailer.createTransport({
   host: process.env.KJYR_MAIL_HOST,
   port: process.env.KJYR_MAIL_PORT
@@ -11,6 +9,7 @@ let transporter = nodemailer.createTransport({
 
 
 module.exports = function sendEmail(address, person, lang) {
+  moment.locale(lang);
   createTimetable(lang).then(timetable => {
 
     let emailMessage = locale[lang].infomail_head + '\r\n\r\n';
