@@ -334,7 +334,9 @@ module.exports = {
             reference: 'id',
             value: person.id
           });
+          // Tells the other persons chosing cabins that the person is done. 
           cabinReservationSystem.completeRegistration(reg.person);
+          // Sends an email to the person with a bunch of nice information about the cruise.
           createInfomail(person.email, person, req.session.lang === undefined ? 'fi' : req.session.lang);
         });
         req.session.registration.step = 6;
