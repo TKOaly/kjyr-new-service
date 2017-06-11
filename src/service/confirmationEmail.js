@@ -32,6 +32,9 @@ module.exports = function sendEmail(address, person, lang) {
       } else
       Backend.Logger.log(`Error: infomail sent to ${address}.`);
     })
+  }).catch(e => {
+    Backend.Logger.log('Error was thrown while building timetable');
+    Backend.Logger.log(e);
   });
 };
 
@@ -42,7 +45,7 @@ function createTimetable(lang) {
     }
   }).then(cruise => {
     if (!cruise) {
-      throw new Error('Criose not found');
+      throw new Error('Cruise not found');
     }
 
     let str = `${locale[lang].infomail_dep_1}  ${moment(cruise.departure_1).format('LLLL')}\r\n`;
