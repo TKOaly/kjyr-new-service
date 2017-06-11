@@ -4,6 +4,7 @@ const Person = require('../models/person');
 const moment = require('moment');
 const CabinReservationSystem = require('../service/CabinReservationSystem');
 const cabinReservationSystem = new CabinReservationSystem();
+const createInfomail = require('../service/confirmationEmail');
 
 const respond = require('../utils/response').stepResponse;
 
