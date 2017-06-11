@@ -27,12 +27,12 @@ module.exports = function sendEmail(address, person, lang) {
       subject: locale[lang].infomail_subject,
       text: emailMessage
     }, (err, info) => {
-      if (err)
-        console.log(err);
-      console.log(info);
-    }).catch(e => {
-      Backend.Logger.log(`Error: infomail not sent to ${address}.`);
-    });
+      if (err) {
+        Backend.Logger.log(`Error: infomail not sent to ${address}.`);
+        Backend.Logger.log(err);
+      } else
+      Backend.Logger.log(`Error: infomail sent to ${address}.`);
+    })
   });
 };
 
