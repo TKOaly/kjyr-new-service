@@ -22,7 +22,7 @@ html
         .box
           h1(class="title is-5")=locale.admin_cruise
           form(action=postURI method='post')
-            label=locale.admin_cruise
+            label=locale.admin_cruise_ship_name
             input(class="input" type='text' name='ship' value=cruise.ship)
             br
             label=locale.admin_cruise_departure
@@ -50,6 +50,9 @@ html
         .box
           h1(class="title is-5")=studOrg.name
           form(action=postURI method='post')
+            label=locale.admin_studorg_name
+            input(class="input" type="text" name="name" value=studOrg.name)
+            br
             label=locale.admin_contact_email
             input(class="input" type='text' name='contact_email' value=studOrg.email)
             br
@@ -64,13 +67,13 @@ html
             if isAdmin
               input(class="input" type='number' name='guardian_quota' value=studOrg.guardianQuota)
             else                            
-              input(class="input" type='number' name='guardian_quota' readonly='readonly' value=studOrg.guardianQuota)
+              input(class="input" type='number' readonly='readonly' value=studOrg.guardianQuota)
             br
             label=locale.admin_cabin_quota
             if isAdmin
               input(class="input" type='number' name='cabin_quota' value=studOrg.quota)
             else
-              input(class="input" type='number' name='cabin_quota' readonly='readonly' value=studOrg.quota)
+              input(class="input" type='number' readonly='readonly' value=studOrg.quota)
             br
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
@@ -80,7 +83,7 @@ html
         .box
           h1(class="title is-5")='Add new student organization'
           form(action='/api/studorgs?vanilla=true' method='post')
-            label='Nimi'
+            label=locale.admin_studorg_name
             input(class="input" type='text' name='name' )
             br
             label=locale.admin_contact_email

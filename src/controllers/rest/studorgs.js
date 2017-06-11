@@ -115,7 +115,7 @@ const updateStudorg = (req, res) => {
     }
   }
 
-  if (!req.body.contact_email || !req.body.contact_telephone || !req.body.ilmo_start || !req.body.cabin_quota) {
+  if (!req.body.contact_email || !req.body.contact_telephone || !req.body.ilmo_start) {
     respond(res, req, 400, null, '/admin');
     return;
   }
@@ -133,12 +133,20 @@ const updateStudorg = (req, res) => {
 
   const studorg = {
     name: req.body.name,
-    quota: req.body.cabin_quota,
     email: req.body.contact_email,
     phone: req.body.contact_telephone,
-    guardian_quota: req.body.guardian_quota || 0,
     ilmo_start: req.body.ilmo_start
   };
+
+  if (req.session.auth.studOrg == 0) {
+    if (req.body.cabin_quota)
+      studorg.quota = req.body.cabin_quota;
+    if (req.body.guardian_quota)
+      studorg.guardian_quota = req.body.guardian_quota || 0 ;
+  } else if (req.session.auth.studOrg == 0 && (req.body.cabin_quota || req.body.guardian_quota)) {
+    respond(res, req, 403, null, '/admin');
+    return;
+  }
 
   Backend.Dao.studorg.findOne({
     where: {
