@@ -1,14 +1,17 @@
-h1=shit
+br
+h1(class="title is-3")=locale.preference
 p=shit
+br
 form(method="post" action="/ilmo/3")
   each pref in preferences
-    div(style="background-color: rgba(1,1,1,0.1); margin-bottom: 20px;")
-      div(style="box-shadow: 0 0 1px 1px grey; padding: 10px;")
-        input(type="radio" id=pref.id name='preference' value=pref)
-        label(for=pref.id)
-          div
-          h2=pref.name
-          p=pref.description
-          b=(pref.price / 100) + '€'
-          br
+    div(class="box")
+      br
+      input(type="radio" id=pref.id name='preference' value=pref)
+      label(for=pref.id class="radio-label")
+        p(class="title is-5")=pref.name
+        p=pref.description
+        br
+        b=(pref.price / 100) + '€'
+        br
+  br
   input(type="submit" value=locale.next class="button")

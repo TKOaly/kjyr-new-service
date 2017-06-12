@@ -10,7 +10,10 @@ p!=locale.cabin_selection_info
             .box(id=val.id style="overlflow: scroll;" persons=Number(val.persons.length) + reservations(val.id))
               label(class="radio")=locale.cabin + ' ' + val.id
                 if val.persons.length < 4
-                  input(type='radio' name='cabnum' id="radio" + val.id value=val.id)
+                  if val.id == chosenCabin
+                    input(type='radio' name='cabnum' id="radio" + val.id value=val.id checked)
+                  else
+                    input(type='radio' name='cabnum' id="radio" + val.id value=val.id)
                 else
                   input(type='radio' name='cabnum' id="radio" + val.id disabled)
               br

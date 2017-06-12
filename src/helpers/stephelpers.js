@@ -101,6 +101,7 @@ module.exports = {
         res.render('signup', {
           cabinStudorgs,
           nStep: 4,
+          chosenCabin: req.session.registration.cabin || null,
           reservations: cabinReservationSystem.getReservationCountForCabin,
           message: req.session.message ? req.session.message.value : null,
           studOrg: req.session.registration.studOrg,

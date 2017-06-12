@@ -368,3 +368,7 @@ select.nationality {
 .bsat:hover p.text span:after {
   content: 'Created with 💉, 💦 and 😭 by Hugo Holmqvist';
 }
+
+.radio-label > input[type="radio"]:checked+label {
+   color: red; 
+} 
