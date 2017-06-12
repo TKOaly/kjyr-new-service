@@ -5,7 +5,7 @@ class EventFeeder {
 
   init(path) {
     this.wss = new WebSocket.Server({
-      port: 8000,
+      port: 4200,
       path
     });
   }
