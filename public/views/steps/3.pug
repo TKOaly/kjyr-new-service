@@ -6,7 +6,10 @@ form(method="post" action="/ilmo/3")
   each pref in preferences
     div(class="box")
       br
-      input(type="radio" id=pref.id name='preference' value=pref)
+      if pref.id == chosenPreference
+        input(type="radio" id=pref.id name='preference' value=pref checked)
+      else
+        input(type="radio" id=pref.id name='preference' value=pref)
       label(for=pref.id class="radio-label")
         p(class="title is-5")=pref.name
         p=pref.description

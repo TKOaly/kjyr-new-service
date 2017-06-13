@@ -58,10 +58,12 @@ module.exports = {
      */
     3: (req, res) => {
       Backend.Dao.preference.findAll().then(preferences => {
+        let chosenPreference = req.session.registration.preferences ? JSON.parse(req.session.registration.preferences.preference) : null
         res.render('signup', {
           preferences,
           nStep: 3,
           message: req.session.message ? req.session.message.value : null,
+          chosenPreference: chosenPreference ? chosenPreference.id : null, // The preference thing should really be refactored
           config: Backend.Config,
           userLanguage: req.session.lang,
           locale: localization[req.session.lang === undefined ? 'fi' : req.session.lang]
@@ -98,10 +100,11 @@ module.exports = {
             }
           }
         }
+        let cabinReservation = cabinReservationSystem.bucket[req.session.registration.person.reservationUUID];
         res.render('signup', {
           cabinStudorgs,
           nStep: 4,
-          chosenCabin: req.session.registration.cabin || null,
+          chosenCabin: cabinReservation ? cabinReservation.cabinId : null,
           reservations: cabinReservationSystem.getReservationCountForCabin,
           message: req.session.message ? req.session.message.value : null,
           studOrg: req.session.registration.studOrg,
@@ -130,6 +133,7 @@ module.exports = {
       });
     },
     6: (req, res) => {
+      req.session.registration = null;
       res.render('signup', {
         nStep: 6,
         message: req.session.message ? req.session.message.value : null,
@@ -351,7 +355,6 @@ module.exports = {
      * Shows that the registration was successful.
      */
     6: (req, res) => {
-      req.session.registration = null;
       if (req.body.fp !== undefined)
         res.redirect('/');
       else if (req.body.new !== undefined)
