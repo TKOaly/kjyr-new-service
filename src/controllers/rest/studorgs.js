@@ -66,7 +66,7 @@ route.post('/', (req, res) => {
     phone: req.body.contact_telephone,
     cabin_quota: req.body.cabin_quota,
     guardian_quota: req.body.guardian_quota,
-    cabin_price: req.body.cabin_price,
+    cabin_price: Number(req.body.cabin_price) * 100,
     ilmo_start: req.body.ilmo_start
   };
 

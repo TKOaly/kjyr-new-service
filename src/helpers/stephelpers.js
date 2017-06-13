@@ -58,12 +58,12 @@ module.exports = {
      */
     3: (req, res) => {
       Backend.Dao.preference.findAll().then(preferences => {
-        let chosenPreference = req.session.registration.preferences ? JSON.parse(req.session.registration.preferences.preference) : null
+        let chosenPreference = req.session.registration.person.preference;
         res.render('signup', {
           preferences,
           nStep: 3,
           message: req.session.message ? req.session.message.value : null,
-          chosenPreference: chosenPreference ? chosenPreference.id : null, // The preference thing should really be refactored
+          chosenPreference: chosenPreference ? chosenPreference.id : null,
           config: Backend.Config,
           userLanguage: req.session.lang,
           locale: localization[req.session.lang === undefined ? 'fi' : req.session.lang]
@@ -261,7 +261,7 @@ module.exports = {
         return;
       }
       // Everything is fine, go to the next step.
-      req.session.registration.preferences = req.body;
+      req.session.registration.person.preference = JSON.parse(req.body.preference);
       req.session.registration.step = 4;
       res.redirect('/ilmo/' + 4);
     },
@@ -325,7 +325,7 @@ module.exports = {
           dob: reg.person.dob,
           email: reg.person.email,
           studorgId: reg.studOrg,
-          preferenceId: JSON.parse(reg.preferences.preference).id,
+          preferenceId: reg.person.preference.id,
           cabinId: reg.cabin,
           reservationUUID: reg.person.reservationUUID,
           guardian: reg.person.guardian || 0,

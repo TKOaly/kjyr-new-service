@@ -23,11 +23,9 @@ form(method='post', action='/ilmo/5')
       td=locale.cabin
       td=registration.cabin
       - let pref = '';
-      if registration.preferences.preference
-        - pref = JSON.parse(registration.preferences.preference);
       tr
       td='Preference'
-      td=(pref.name || '')
+      td=(registration.person.preference.name || '')
   br
   input(type="submit" value=locale.next class="button")
   .eula

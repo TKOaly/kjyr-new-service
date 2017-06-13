@@ -83,7 +83,7 @@ const updatePref = (req, res) => {
   const Preference = {
     name: req.body.name,
     description: req.body.description,
-    price: Number(req.body.price)
+    price: Number(req.body.price) * 100
   };
   Backend.Dao.preference.findOne({
     where: {
