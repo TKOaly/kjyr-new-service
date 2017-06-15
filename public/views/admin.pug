@@ -76,6 +76,12 @@ html
             else
               input(class="input" type='number' readonly='readonly' value=studOrg.quota)
             br
+            label=locale.admin_cruise_cabin_price
+            if isAdmin
+              input(class="input" type="number" name="cabin_price" value=studOrg.cabin_price / 100)
+            else
+              input(class="input" type="number" value=studOrg.cabin_price / 100 readonly)
+            br
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
             br
@@ -105,7 +111,7 @@ html
             label=locale.admin_cabin_quota
             input(class="input" type='number' name='cabin_quota')
             br
-            lable='Yhden kokonaisen hytin hinta'
+            lable=locale.admin_cruise_cabin_price
             input(class="input" type='number' name='cabin_price')
             br
             label=locale.login_password
@@ -130,7 +136,7 @@ html
               input(class="input" type='text' name='description' value=preference.description)
               br
               label='Hinta'
-              input(class="input" type='number' name='price' value=preference.price)
+              input(class="input" type='number' name='price' value=preference.price / 100)
               br
               button(class="button is-success" type='submit')=locale.admin_form_submit
               br

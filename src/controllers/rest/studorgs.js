@@ -143,7 +143,9 @@ const updateStudorg = (req, res) => {
       studorg.quota = req.body.cabin_quota;
     if (req.body.guardian_quota)
       studorg.guardian_quota = req.body.guardian_quota || 0 ;
-  } else if (req.session.auth.studOrg == 0 && (req.body.cabin_quota || req.body.guardian_quota)) {
+    if (req.body.cabin_price)
+      studorg.cabin_price = Number(req.body.cabin_price) * 100;
+  } else if (req.session.auth.studOrg == 0 && (req.body.cabin_quota || req.body.guardian_quota || req.body.guardian_quota)) {
     respond(res, req, 403, null, '/admin');
     return;
   }
