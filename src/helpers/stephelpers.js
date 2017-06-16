@@ -59,10 +59,10 @@ module.exports = {
     3: (req, res) => {
       Backend.Dao.preference.findAll().then(preferences => {
         let chosenPreference = req.session.registration.person.preference;
-        res.render('signup', {
+          res.render('signup', {
           preferences,
           nStep: 3,
-          message: req.session.message ? req.session.message.value : null,
+          message: req.session.message ? req.session.message.val : null,
           chosenPreference: chosenPreference ? chosenPreference.id : null,
           config: Backend.Config,
           userLanguage: req.session.lang,
@@ -106,7 +106,7 @@ module.exports = {
           nStep: 4,
           chosenCabin: cabinReservation ? cabinReservation.cabinId : null,
           reservations: cabinReservationSystem.getReservationCountForCabin,
-          message: req.session.message ? req.session.message.value : null,
+          message: req.session.message ? req.session.message.val : null,
           studOrg: req.session.registration.studOrg,
           config: Backend.Config,
           userLanguage: req.session.lang,
@@ -125,7 +125,7 @@ module.exports = {
           studorg,
           registration: req.session.registration,
           nStep: 5,
-          message: req.session.message ? req.session.message.value : null,
+          message: req.session.message ? req.session.message.val : null,
           config: Backend.Config,
           userLanguage: req.session.lang,
           locale: localization[req.session.lang === undefined ? 'fi' : req.session.lang]
@@ -136,7 +136,7 @@ module.exports = {
       req.session.registration = null;
       res.render('signup', {
         nStep: 6,
-        message: req.session.message ? req.session.message.value : null,
+        message: req.session.message ? req.session.message.val : null,
         config: Backend.Config,
         userLanguage: req.session.lang,
         locale: localization[req.session.lang === undefined ? 'fi' : req.session.lang]
@@ -272,7 +272,7 @@ module.exports = {
       req.session.registration.cabin = req.body.cabnum;
       if (!req.body.cabnum) {
         // No entry was found so just redirect back.
-        res.redirect('/ilmo');
+        respond(req, res, 400, 'No cabin chosen', '/ilmo');
         return;
       }
 

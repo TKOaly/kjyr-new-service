@@ -5,6 +5,7 @@ const MySQLSessionStore = require('express-mysql-session');
 const DB = require('./src/database');
 const Logger = require('./src/utils/logger');
 const app = express();
+const helmet = require('helmet');
 
 require('dotenv').config();
 
@@ -18,6 +19,7 @@ Backend.Dao = require('./src/models/model');
 const userInterfaceController = require('./src/controllers/ui');
 const apiController = require('./src/controllers/rest/api');
 
+app.use(helmet());
 app.set('views', './public/views');
 app.set('view engine', 'pug');
 app.set('trust proxy', 1); // Should probably just be enabled for debugging.
