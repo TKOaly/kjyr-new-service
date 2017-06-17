@@ -24,7 +24,7 @@ form(method="post" action="/ilmo/2")
         .field
           label(class="label")=locale.dob
             - let date = moment(person.dob).format('DD/MM/YYYY');
-            input(data-toggle='datepicker' name="dob" class="input" type="text" id="datepicker" value=date)
+            input(data-toggle='datepicker' readonly name="dob" class="input" type="text" id="datepicker" value=date)
             noscript
               input(class="input" type="text" name="day" placeholder="Day" required)
               input(class="input" type="text" name="month" placeholder="Month" required)
