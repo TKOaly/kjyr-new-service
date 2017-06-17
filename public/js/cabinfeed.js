@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://' + window.location.hostname + '/cabins');
+const socket = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}` + window.location.hostname + '/cabins');
 
 socket.onopen = function () {
   console.log('Socket opened');
