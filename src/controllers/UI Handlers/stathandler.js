@@ -19,7 +19,7 @@ function StatHandler() {
     }).catch(e => {
       console.log(e);
       throw new Error('Paskaks meni');
-    })
+    })  
   };
 
 /**

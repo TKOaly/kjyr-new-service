@@ -4,10 +4,10 @@ html
     link(rel="stylesheet", href="css/bulma.css")
     link(rel="stylesheet" href="css/style.css")
     script(type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js")
-    link(href="/css/datepicker.css" rel="stylesheet")
-    script(type="text/javascript" src="/js/datepicker.js")
     meta(name='viewport', content='width=device-width, minimum-scale=1.0')
     script(type="text/javascript")='$.fn.datepicker'
+    link(rel='stylesheet', href='https://unpkg.com/flatpickr/dist/flatpickr.min.css')
+    script(src='https://unpkg.com/flatpickr')
   body
   include components/navbar
   .container
@@ -27,19 +27,19 @@ html
             br
             label=locale.admin_cruise_departure
             - let date = moment(cruise.departure1).format('DD/MM/YYYY HH:mm');
-            input(class="input" type='text' name='departure1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            input(class="input datetime" type='text' name='departure1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
             br
             label=locale.admin_cruise_arrival
             - date = moment(cruise.arrival1).format('DD/MM/YYYY HH:mm');
-            input(class="input" type='text' name='arrival1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)  
+            input(class="input datetime" type='text' name='arrival1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)  
             br
             label=locale.admin_cruise_departure
             - date = moment(cruise.departure2).format('DD/MM/YYYY HH:mm');
-            input(class="input" type='text' name='departure2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            input(class="input datetime" type='text' name='departure2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
             br
             label=locale.admin_cruise_arrival
             - date = moment(cruise.arrival2).format('DD/MM/YYYY HH:mm');
-            input(class="input" type='text' name='arrival2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)   
+            input(class="input datetime" type='text' name='arrival2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)   
             br                    
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
@@ -62,7 +62,7 @@ html
             br
             label=locale.admin_ilmo_start
             - let date = moment(studOrg.ilmo_start).format('DD/MM/YYYY HH:mm');
-            input(class="input" type='text' name='ilmo_start' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            input(class="input datetime" type='text' name='ilmo_start' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
             br
             label=locale.admin_guardian_quota
             if isAdmin
@@ -103,7 +103,7 @@ html
             input(class="input" type='text' name='contact_telephone')
             br
             label=locale.admin_ilmo_start
-            input(class="input" type='text' name='ilmo_start' pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" required placeholder="DD/MM/YYYY HH:mm")
+            input(class="input datetime" type='text' name='ilmo_start' pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" required placeholder="DD/MM/YYYY HH:mm")
             br
             label=locale.admin_guardian_quota
             input(class="input" type='number' name='guardian_quota')
@@ -309,5 +309,12 @@ html
                   form(action=deleteURI method="post" id="deleteForm" + person.id  style="display: none")
                     button(class="button is-danger" type="submit")=locale.admin_studorg_delete
   script.
-    $('[data-toggle="datepicker"]').datepicker();    
+    $('[data-toggle="datepicker"]').flatpickr({
+      dateFormat: 'd/m/Y'
+    });
+    $('.datetime').flatpickr({
+      dateFormat: 'd/m/Y H:i',
+      enableTime: true,
+      time_24hr: true
+    }); 
   script(type="text/javascript" src="/js/personlist.js")
