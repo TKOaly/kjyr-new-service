@@ -7,7 +7,6 @@ let transporter = nodemailer.createTransport({
   port: process.env.KJYR_MAIL_PORT
 });
 
-
 module.exports = function sendEmail(address, person, lang) {
   moment.locale(lang);
   createTimetable(lang).then(timetable => {
