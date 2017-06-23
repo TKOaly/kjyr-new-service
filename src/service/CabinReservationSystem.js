@@ -62,11 +62,11 @@ class CabinReservationSystem extends EventFeeder {
     delete self.bucket[person.reservationUUID];
     self.send({
       event: 'RESERVATION_COMPLETE',
-      person: [person].map(p => ({
-        reservationId: p.reservationUUID,
-        firstname: p.firstname,
-        lastname: p.lastname
-      }))[0]
+      person: {
+        reservationId: person.reservationUUID,
+        firstname: person.firstname,
+        lastname: person.lastname
+      }
     });
   }
 
