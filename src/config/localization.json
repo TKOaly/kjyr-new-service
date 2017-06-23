@@ -1,5 +1,6 @@
 {
     "en": {
+        "home": "Home",
         "preference": "Preference",
         "stats_studorg": "Student organizations",
         "back_button": "Back",
@@ -117,6 +118,7 @@
         "infomail_footer": "Best regards,\r\n\r\n-- \r\nMikko Rantanen \/ With love, your cruise hostess too"
     },
     "se": {
+        "home": "Startsida",
         "prefernece": "Tillval",
         "stats_studorg": "Ämnesföreningar",
         "back_button": "Tillbaka",
@@ -234,6 +236,7 @@
         "infomail_footer": "Mvh,\r\n\r\n--\r\nMikko Rantanen \/ Med k\u00e4rlek, \u00e4ven din kryssningsv\u00e4rdinna"
     },
     "fi": {
+        "home": "Pääsivu",
         "preference": "Lisävalinta",
         "stats_studorg": "Ainejärjestöjä",
         "back_button": "Takaisin",
