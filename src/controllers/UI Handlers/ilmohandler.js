@@ -1,5 +1,5 @@
 const localization = require('../../config/localization.json');
-const stepHelpers = require('../../helpers/stephelpers')
+const stepHelpers = require('./registrationStepHandler')
 
 module.exports = new IlmoHandler();
 

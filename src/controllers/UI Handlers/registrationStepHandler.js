@@ -1,12 +1,12 @@
 // Module that handles steps
-const localization = require('../config/localization.json');
-const Person = require('../models/person');
+const localization = require('../../config/localization.json');
+const Person = require('../../models/person');
 const moment = require('moment');
-const CabinReservationSystem = require('../service/CabinReservationSystem');
+const CabinReservationSystem = require('../../service/CabinReservationSystem');
 const cabinReservationSystem = new CabinReservationSystem();
-const createInfomail = require('../service/confirmationEmail');
+const createInfomail = require('../../service/confirmationEmail');
 
-const respond = require('../utils/response').stepResponse;
+const respond = require('../../utils/response').stepResponse;
 
 /**
  * This module is called by ilmohandler.js
@@ -159,7 +159,7 @@ module.exports = {
         // Do a check that the student organizations sign-up is open. Studorgs where the sign-up is still closed is
         // never listed in the front end, but there's always someone who tries to just POST straight to the backend.
         Backend.Dao.studorg.findOne({ where: { id: req.body.studorg } }).then(studorg => {
-          if (studorg.dataValues.ilmo_start.getTime() > new Date().getTime()) {
+          if (studorg && studorg.dataValues.ilmo_start.getTime() > new Date().getTime()) {
             // lol wait a bit longer :^)
             req.session.registration.step = 1;
             res.redirect('/ilmo');
