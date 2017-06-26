@@ -191,7 +191,7 @@
       this.$trigger = $(options.trigger);
       this.isInput = $this.is('input') || $this.is('textarea');
       this.isInline = options.inline && (options.container || !this.isInput);
-      this.format = parseFormat('dd/mm/yyyy');
+      this.format = parseFormat('yyyy-mm-dd');
       this.oldValue = this.initialValue = this.getValue();
       date = this.parseDate(date || this.initialValue);
 

@@ -26,20 +26,20 @@ html
             input(class="input" type='text' name='ship' value=cruise.ship)
             br
             label=locale.admin_cruise_departure
-            - let date = moment(cruise.departure1).format('DD/MM/YYYY HH:mm');
-            input(class="input datetime" type='text' name='departure1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            - let date = moment(cruise.departure1).format('YYYY-MM-DD HH:mm');
+            input(class="input datetime" type='text' name='departure1' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)
             br
             label=locale.admin_cruise_arrival
-            - date = moment(cruise.arrival1).format('DD/MM/YYYY HH:mm');
-            input(class="input datetime" type='text' name='arrival1' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)  
+            - date = moment(cruise.arrival1).format('YYYY-MM-DD HH:mm');
+            input(class="input datetime" type='text' name='arrival1' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)  
             br
             label=locale.admin_cruise_departure
-            - date = moment(cruise.departure2).format('DD/MM/YYYY HH:mm');
-            input(class="input datetime" type='text' name='departure2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            - date = moment(cruise.departure2).format('YYYY-MM-DD HH:mm');
+            input(class="input datetime" type='text' name='departure2' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)
             br
             label=locale.admin_cruise_arrival
-            - date = moment(cruise.arrival2).format('DD/MM/YYYY HH:mm');
-            input(class="input datetime" type='text' name='arrival2' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)   
+            - date = moment(cruise.arrival2).format('YYYY-MM-DD HH:mm');
+            input(class="input datetime" type='text' name='arrival2' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)   
             br                    
             button(class="button is-success" type='submit')=locale.admin_form_submit
             br
@@ -61,8 +61,8 @@ html
             input(class="input" type='text' name='contact_telephone' value=studOrg.phone)
             br
             label=locale.admin_ilmo_start
-            - let date = moment(studOrg.ilmo_start).format('DD/MM/YYYY HH:mm');
-            input(class="input datetime" type='text' name='ilmo_start' placeholder="DD/MM/YYYY HH:mm" pattern="[0-3][0-9]\/[0-3][0-9]\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$" value=date)
+            - let date = moment(studOrg.ilmo_start).format('YYYY-MM-DD HH:mm');
+            input(class="input datetime" type='text' name='ilmo_start' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)
             br
             label=locale.admin_guardian_quota
             if isAdmin
@@ -233,7 +233,8 @@ html
                     td
                       button(class="button is-success" type="submit" name="person_id" value=person.id class="update_button")=locale.admin_form_submit
                   form(action=deleteURI method="post")
-                    button(class="button is-danger" type="submit")=locale.admin_studorg_delete
+                    td
+                      button(class="button is-danger" type="submit")=locale.admin_studorg_delete
       else
         .columns
           .column(style="height: 100%; overflow: auto;" class="is-half")
@@ -257,7 +258,7 @@ html
                         input(type="text" class="input"  name="lastname" value=person.lastname)
                       .field
                         label(class="label")=locale.dob                    
-                        - let date = moment(person.dob).format('DD/MM/YYYY');
+                        - let date = moment(person.dob).format('YYYY-MM-DD');
                         input(data-toggle='datepicker' name="dob" class="input firstname" value=date type="text" id="datepicker")
                       .field
                         label(class="label")!=locale.admin_participant_email
@@ -310,10 +311,10 @@ html
                     button(class="button is-danger" type="submit")=locale.admin_studorg_delete
   script.
     $('[data-toggle="datepicker"]').flatpickr({
-      dateFormat: 'd/m/Y'
+      dateFormat: 'Y-m-d'
     });
     $('.datetime').flatpickr({
-      dateFormat: 'd/m/Y H:i',
+      dateFormat: 'Y-m-d H:i',
       enableTime: true,
       time_24hr: true
     }); 

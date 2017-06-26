@@ -31,10 +31,10 @@ const updateCruise = (req, res) => {
     return;
   }
 
-  let dep1 = moment(req.body.departure1, 'DD/MM/YYYY HH:mm').toDate(),
-    dep2 = moment(req.body.departure2, 'DD/MM/YYYY HH:mm').toDate(),
-    arr1 = moment(req.body.arrival1, 'DD/MM/YYYY HH:mm').toDate(),
-    arr2 = moment(req.body.arrival2, 'DD/MM/YYYY HH:mm').toDate();
+  let dep1 = moment(req.body.departure1, 'YYYY-MM-DD HH:mm').toDate(),
+    dep2 = moment(req.body.departure2, 'YYYY-MM-DD HH:mm').toDate(),
+    arr1 = moment(req.body.arrival1, 'YYYY-MM-DD HH:mm').toDate(),
+    arr2 = moment(req.body.arrival2, 'YYYY-MM-DD HH:mm').toDate();
 
   Backend.Dao.cruise.findAll().then(cruises => {
     let count = cruises.length;

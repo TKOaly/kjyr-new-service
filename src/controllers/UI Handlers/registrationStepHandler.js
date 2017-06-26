@@ -179,7 +179,7 @@ module.exports = {
     2: (req, res) => {
       if (!req.session.registration.person)
         req.session.registration.person = {};
-        
+
       // Merge these shits
       for (let key in req.body) {
         req.session.registration.person[key] = req.body[key];
@@ -193,13 +193,12 @@ module.exports = {
           return;
         }
 
-        // If this property doesn't exsist, we can assume that 
-        // some noscript user is using the non-js for for signing up.
-        if (!req.body.dob) {
-          if (req.body.day && req.body.month && req.body.year) {
-            req.body.dob = `${req.body.day}/${req.body.month}/${req.body.year}`;
-          } else {
+        if (req.body.day && req.body.month && req.body.year) {
+          req.body.dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
+        } else {
+          if (!req.body.dob) {
             respond(req, res, 400, 'No date entered', '/ilmo');
+            return;
           }
         }
 
@@ -214,7 +213,7 @@ module.exports = {
         }
 
         // Validate date of birth
-        if (!/[0-9][0-9]?\/[0-9][0-9]?\/[0-9]{4}$/.test(req.body.dob)) {
+        if (!/[0-9]{4}-[0-9][0-9]?-[0-9][0-9]?$/.test(req.body.dob)) {
           respond(req, res, 400, 'Misformed date of birth', '/ilmo');
           return;
         }
@@ -225,7 +224,7 @@ module.exports = {
         }
 
         // Check that the age of the participant is high enough.
-        let dobObj = moment(req.body.dob, 'DD-MM-YYYY');
+        let dobObj = moment(req.body.dob, 'YYYY-MM-DD');
         if (-moment.duration(dobObj.diff(moment(cruise[0].get('departure1')))).asYears() < Backend.Config.agelimit) {
           respond(req, res, 403, 'You are not allowed to attend this cruise with your current age', '/ilmo');
           return;

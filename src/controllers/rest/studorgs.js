@@ -47,11 +47,11 @@ route.post('/', (req, res) => {
     return;
   }
 
-  if (!/[0-3][0-9]\/[0-9][0-9]?\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$/.test(req.body.ilmo_start)) {
+  if (!/[0-9]{4}-[0-3][0-9]-[0-9][0-9]? [0-2][0-9]:[0-5][0-9]$/.test(req.body.ilmo_start)) {
     respond(res, req, 400, null, '/admin');
     return;
   } else {
-    req.body.ilmo_start = moment(req.body.ilmo_start, 'DD/MM/YYYY HH:mm');
+    req.body.ilmo_start = moment(req.body.ilmo_start, 'YYYY-MM-DD HH:mm');
   }
 
   if (!/.+@.+/.test(req.body.contact_email)) {
@@ -120,10 +120,10 @@ const updateStudorg = (req, res) => {
     return;
   }
 
-  if (!/[0-3][0-9]\/[0-9][0-9]?\/[0-9]{4} [0-2][0-9]:[0-5][0-9]$/.test(req.body.ilmo_start)) {
+  if (!/[0-9]{4}-[0-3][0-9]-[0-9][0-9]? [0-2][0-9]:[0-5][0-9]$/.test(req.body.ilmo_start)) {
     respond(res, req, 400, null, '/admin');
     return;
-  } else req.body.ilmo_start = moment(req.body.ilmo_start, 'DD/MM/YYYY HH:mm').toDate();
+  } else req.body.ilmo_start = moment(req.body.ilmo_start, 'YYYY-MM-DD HH:mm').toDate();
 
 
   if (!/.+@.+/.test(req.body.contact_email)) {

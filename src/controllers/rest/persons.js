@@ -66,11 +66,11 @@ const updatePerson = (req, res) => {
         id: req.params.id
       }
     });
-    let dob = `${req.body.day}/${req.body.month}/${req.body.year}`;
+    let dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
     if (req.body.dob && (!req.body.day || !req.body.month || !req.body.year)) {
       dob = req.body.dob;
     }
-    if (!/[0-9][0-9]?\/[0-9][0-9]?\/[0-9]{4}$/.test(dob)) {
+    if (!/[0-9]{4}-[0-9][0-9]?-[0-9][0-9]?$/.test(dob)) {
       respond(res, req, 400, null, '/admin');
       return;
     }
@@ -86,7 +86,7 @@ const updatePerson = (req, res) => {
       }
     }
 
-    if (-moment.duration(moment(dob, 'DD-MM-YYYY').diff(moment(cruise[0].get('departure1')))).asYears() < Backend.Config.agelimit) {
+    if (-moment.duration(moment(dob, 'YYYY-MM-DD').diff(moment(cruise[0].get('departure1')))).asYears() < Backend.Config.agelimit) {
       respond(res, req, 403, null, '/admin');
       return;
     }
@@ -100,7 +100,7 @@ const updatePerson = (req, res) => {
     const person = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      dob: moment(dob, 'DD-MM-YYYY').toDate(),
+      dob: moment(dob, 'YYYY-MM-DD').toDate(),
       email: req.body.email,
       preferenceId: 1,
       cabinId: req.body.cabin,
