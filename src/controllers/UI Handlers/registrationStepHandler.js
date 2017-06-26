@@ -59,7 +59,7 @@ module.exports = {
     3: (req, res) => {
       Backend.Dao.preference.findAll().then(preferences => {
         let chosenPreference = req.session.registration.person.preference;
-          res.render('signup', {
+        res.render('signup', {
           preferences,
           nStep: 3,
           message: req.session.message ? req.session.message.val : null,
@@ -211,6 +211,11 @@ module.exports = {
           return;
         }
 
+        if (!/.+@.+/.test(req.body.email)) {
+          respond(req, res, 400, 'Misformed email', '/ilmo');
+          return;
+        }
+
         // Check that the age of the participant is high enough.
         let dobObj = moment(req.body.dob, 'DD-MM-YYYY');
         if (-moment.duration(dobObj.diff(moment(cruise[0].get('departure1')))).asYears() < Backend.Config.agelimit) {
@@ -226,7 +231,7 @@ module.exports = {
           res.redirect('/ilmo');
           return;
         }
-        
+
         let personReservationUUID = (req.session.registration.person && req.session.registration.person.reservationUUID) ? req.session.registration.person.reservationUUID : null;
         req.session.registration.person = req.body;
         if (personReservationUUID == null) {
@@ -235,7 +240,7 @@ module.exports = {
         else {
           req.body.reservationId = personReservationUUID;
           cabinReservationSystem.updateBucketValue(personReservationUUID, req.body);
-          req.session.registration.person.reservationUUID = personReservationUUID; 
+          req.session.registration.person.reservationUUID = personReservationUUID;
         }
 
         // Everything is gucchi.
@@ -318,7 +323,7 @@ module.exports = {
           respond(req, res, 403, 'Cabin is full!', '/ilmo/4');
           return;
         }
-        
+
         const person = {
           firstname: reg.person.firstname,
           lastname: reg.person.lastname,
