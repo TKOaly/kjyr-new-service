@@ -177,6 +177,14 @@ module.exports = {
      * Handles personal information
      */
     2: (req, res) => {
+      if (!req.session.registration.person)
+        req.session.registration.person = {};
+        
+      // Merge these shits
+      for (let key in req.body) {
+        req.session.registration.person[key] = req.body[key];
+      }
+
       // Fetch the cruise.
       Backend.Dao.cruise.findAll().then(cruise => {
         // Check that everything was filled in.
@@ -236,8 +244,7 @@ module.exports = {
         req.session.registration.person = req.body;
         if (personReservationUUID == null) {
           req.session.registration.person.reservationUUID = '' + ((new Date().getTime()) + (Math.floor(Math.random() * 1000)));
-        }
-        else {
+        } else {
           req.body.reservationId = personReservationUUID;
           cabinReservationSystem.updateBucketValue(personReservationUUID, req.body);
           req.session.registration.person.reservationUUID = personReservationUUID;
