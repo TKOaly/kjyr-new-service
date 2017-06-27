@@ -1,3 +1,5 @@
+[![Build Status](http://mattermost.tko-aly.fi/buildStatus/icon?job=mayhem)](http://mattermost.tko-aly.fi/job/mayhem/)
+
 # Mayhem
 
 KJYR registration system. 
