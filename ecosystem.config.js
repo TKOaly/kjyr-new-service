@@ -4,8 +4,6 @@ module.exports = {
    * http://pm2.keymetrics.io/docs/usage/application-declaration/
    */
   apps : [
-
-    // First application
     {
       name      : 'Mayhem',
       script    : 'app.js',
