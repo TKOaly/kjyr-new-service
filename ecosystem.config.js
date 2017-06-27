@@ -25,7 +25,7 @@ module.exports = {
   deploy : {
     production : {
       user : 'mayhem',
-      host : 'mayhem@haba.tko-aly.fi',
+      host : 'haba.tko-aly.fi',
       ref  : 'origin/master',
       "pre-deploy-local" : "whoami",
       repo : 'git@github.com:TKOaly/mayhem.git',
