@@ -1,4 +1,4 @@
-[![Build Status](http://mattermost.tko-aly.fi/buildStatus/icon?job=mayhem)](http://mattermost.tko-aly.fi/job/mayhem/)
+[![Build Status](https://mattermost.tko-aly.fi/buildStatus/icon?job=mayhem)](http://mattermost.tko-aly.fi/job/mayhem/)
 
 # Mayhem
 
