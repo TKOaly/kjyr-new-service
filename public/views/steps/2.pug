@@ -25,9 +25,9 @@ form(method="post" action="/ilmo/2")
             - let date = moment(person.dob).format('YYYY-MM-DD');
             input(data-toggle='datepicker' name="dob" class="input" type="text" id="datepicker" value=date)
             noscript
-              input(class="input" type="text" name="day" placeholder="Day" required)
-              input(class="input" type="text" name="month" placeholder="Month" required)
-              input(class="input" type="text" name="year" placeholder="Year" required)
+              input(class="input" type="text" name="day" value=person.day placeholder="Day" required)
+              input(class="input" type="text" name="month" value=person.month placeholder="Month" required)
+              input(class="input" type="text" name="year" value=person.year placeholder="Year" required)
               style='#datepicker { display: none; } "'
       tr
       td
