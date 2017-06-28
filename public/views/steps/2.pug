@@ -1,7 +1,6 @@
 script(type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js")
-link(href="/css/datepicker.css" rel="stylesheet")
-script(type="text/javascript" src="/js/datepicker.js")
-script(type="text/javascript")='$.fn.datepicker'
+link(rel='stylesheet', href='https://unpkg.com/flatpickr/dist/flatpickr.min.css')
+script(src='https://unpkg.com/flatpickr')
 h1(class="title is-3")=locale.step3_title
 p=locale.step3_para1
 form(method="post" action="/ilmo/2")
@@ -24,7 +23,7 @@ form(method="post" action="/ilmo/2")
         .field
           label(class="label")=locale.dob
             - let date = moment(person.dob).format('YYYY-MM-DD');
-            input(data-toggle='datepicker' readonly name="dob" class="input" type="text" id="datepicker" value=date)
+            input(data-toggle='datepicker' name="dob" class="input" type="text" id="datepicker" value=date)
             noscript
               input(class="input" type="text" name="day" placeholder="Day" required)
               input(class="input" type="text" name="month" placeholder="Month" required)
@@ -50,4 +49,7 @@ form(method="post" action="/ilmo/2")
   .eula
   p=locale.registration_eula
 script.
-  $('[data-toggle="datepicker"]').datepicker();              
+  $('[data-toggle="datepicker"]').flatpickr({
+    dateFormat: 'Y-m-d',
+    allowInput: true
+  });         
