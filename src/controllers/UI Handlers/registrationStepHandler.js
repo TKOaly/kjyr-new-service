@@ -133,7 +133,7 @@ module.exports = {
       });
     },
     6: (req, res) => {
-      req.session.registration = null;
+      delete req.session.registration;
       res.render('signup', {
         nStep: 6,
         message: req.session.message ? req.session.message.val : null,
@@ -366,10 +366,7 @@ module.exports = {
      * Shows that the registration was successful.
      */
     6: (req, res) => {
-      if (req.body.fp !== undefined)
-        res.redirect('/');
-      else if (req.body.new !== undefined)
-        res.redirect('/ilmo');
+      res.redirect('/ilmo');
     }
   }
 };
