@@ -311,11 +311,13 @@ html
                     button(class="button is-danger" type="submit")=locale.admin_studorg_delete
   script.
     $('[data-toggle="datepicker"]').flatpickr({
-      dateFormat: 'Y-m-d'
+      dateFormat: 'Y-m-d',
+      allowInput: true
     });
     $('.datetime').flatpickr({
       dateFormat: 'Y-m-d H:i',
       enableTime: true,
-      time_24hr: true
+      time_24hr: true,
+      allowInput: true
     }); 
   script(type="text/javascript" src="/js/personlist.js")
