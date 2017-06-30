@@ -278,7 +278,7 @@ module.exports = {
       req.session.registration.cabin = req.body.cabnum;
       if (!req.body.cabnum) {
         // No entry was found so just redirect back.
-        respond(req, res, 400, 'No cabin chosen', '/ilmo');
+        respond(req, res, 400, 'signup_error_no_cabin', '/ilmo');
         return;
       }
 
@@ -290,7 +290,7 @@ module.exports = {
         if (!qres[0].dataValues.c === undefined || (Number(qres[0].dataValues.c) + cabinReservationSystem.getReservationCountForCabin(req.session.registration.cabin)) >= 4) {
           // The cabin is full, redirect back.
           req.session.registration.step = 4;
-          respond(req, res, 403, 'Cabin is full!', '/ilmo');
+          respond(req, res, 403, 'signup_error_cabin_full', '/ilmo');
           return;
         }
 
@@ -312,7 +312,7 @@ module.exports = {
       if (!cabinReservationSystem.bucket[reg.person.reservationUUID]) {
         // No reservation exsists, so redirect.
         req.session.registration.step = 4;
-        respond(req, res, 403, 'Cabin reservation has expired', '/ilmo/4');
+        respond(req, res, 403, 'signup_error_cabin_resexp', '/ilmo/4');
         return;
       }
       Backend.Dao.person.count({
@@ -321,7 +321,7 @@ module.exports = {
         }
       }).then(count => {
         if ((count + cabinReservationSystem.getReservationCountForCabin(req.cabin)) >= 4) {
-          respond(req, res, 403, 'Cabin is full!', '/ilmo/4');
+          respond(req, res, 403, 'signup_error_cabin_full', '/ilmo/4');
           return;
         }
 
