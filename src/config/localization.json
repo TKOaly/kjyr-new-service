@@ -1,5 +1,12 @@
 {
     "en": {
+        "signup_error_no_preference": "No preference chosen",
+        "signup_error_user_is_kid": "You are not allowed to attend this cruise with your current age",
+        "signup_error_misformed_email": "Misformed email",
+        "signup_error_misformed_date": "Misformed date format",
+        "signup_error_misformed_flname": "Misformed firstname or lastname",
+        "signup_error_missing_info": "Missing information from form",
+        "signup_error_nodate": "No date entered",
         "home": "Home",
         "preference": "Preference",
         "stats_studorg": "Student organizations",
@@ -118,6 +125,13 @@
         "infomail_footer": "Best regards,\r\n\r\n-- \r\nMikko Rantanen \/ With love, your cruise hostess too"
     },
     "se": {
+        "signup_error_no_preference": "Inget preferensval",
+        "signup_error_user_is_kid": "Du är inte tillåten at delta på kryssningen med din ålder",
+        "signup_error_misformed_email": "Fel mailformat",
+        "signup_error_misformed_date": "Fel datumsformat",
+        "signup_error_misformed_flname": "Fel format på namnet",
+        "signup_error_nodate": "Datum saknas",
+        "signup_error_missing_info": "Information saknas",
         "home": "Startsida",
         "prefernece": "Tillval",
         "stats_studorg": "Ämnesföreningar",
@@ -236,6 +250,13 @@
         "infomail_footer": "Mvh,\r\n\r\n--\r\nMikko Rantanen \/ Med k\u00e4rlek, \u00e4ven din kryssningsv\u00e4rdinna"
     },
     "fi": {
+        "signup_error_no_preference": "Valinta puutuu",
+        "signup_error_user_is_kid": "Sinulle ei ole oikeutta osallistua risteilylle nykyisellä iälläsi",
+        "signup_error_misformed_email": "Väärä sähköpostimuoto",
+        "signup_error_misformed_date": "Väärä päivämäärämuoto",
+        "signup_error_misformed_flname": "Väärä nimenmuoto",
+        "signup_error_nodate": "Päivämäärä puuttuu",
+        "signup_error_missing_info": "Lomakkeesta puuttuu tietoja",
         "home": "Pääsivu",
         "preference": "Lisävalinta",
         "stats_studorg": "Ainejärjestöjä",

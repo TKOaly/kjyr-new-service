@@ -189,7 +189,7 @@ module.exports = {
       Backend.Dao.cruise.findAll().then(cruise => {
         // Check that everything was filled in.
         if (!req.body.firstname || !req.body.lastname || !req.body.nationality || !req.body.email) {
-          respond(req, res, 400, 'Missing information from form', '/ilmo');
+          respond(req, res, 400, 'signup_error_missing_info', '/ilmo');
           return;
         }
 
@@ -197,47 +197,42 @@ module.exports = {
           req.body.dob = `${req.body.year}-${req.body.month}-${req.body.day}`;
         } else {
           if (!req.body.dob) {
-            respond(req, res, 400, 'No date entered', '/ilmo');
+            respond(req, res, 400, 'signup_error_nodate', '/ilmo');
             return;
           }
         }
 
         if (req.body.firstname.length === 0 || req.body.lastname.length === 0) {
-          respond(req, res, 400, 'Misformed firstname or lastname', '/ilmo');
+          respond(req, res, 400, 'signup_error_misformed_flname', '/ilmo');
           return;
         }
 
         if (req.body.firstname.length > 50 || req.body.lastname.length > 50) {
-          respond(req, res, 400, 'Misformed firstname or lastname', '/ilmo');
+          respond(req, res, 400, 'signup_error_misformed_flname', '/ilmo');
           return;
         }
 
         // Validate date of birth
         if (!/[0-9]{4}-[0-9][0-9]?-[0-9][0-9]?$/.test(req.body.dob)) {
-          respond(req, res, 400, 'Misformed date of birth', '/ilmo');
+          respond(req, res, 400, 'signup_error_misformed_date', '/ilmo');
           return;
         }
 
+        // Check that the email format is fine.
         if (!/.+@.+/.test(req.body.email)) {
-          respond(req, res, 400, 'Misformed email', '/ilmo');
+          respond(req, res, 400, 'signup_error_misformed_email', '/ilmo');
           return;
         }
 
         // Check that the age of the participant is high enough.
         let dobObj = moment(req.body.dob, 'YYYY-MM-DD');
         if (-moment.duration(dobObj.diff(moment(cruise[0].get('departure1')))).asYears() < Backend.Config.agelimit) {
-          respond(req, res, 403, 'You are not allowed to attend this cruise with your current age', '/ilmo');
+          respond(req, res, 403, 'signup_error_user_is_kid', '/ilmo');
           return;
         }
 
         req.body.dob = dobObj;
         req.body.studOrg = req.session.registration.studOrg;
-
-        // Check that the email format is fine.
-        if (!/.+@.+/.test(req.body.email)) {
-          res.redirect('/ilmo');
-          return;
-        }
 
         let personReservationUUID = (req.session.registration.person && req.session.registration.person.reservationUUID) ? req.session.registration.person.reservationUUID : null;
         req.session.registration.person = req.body;
@@ -260,7 +255,7 @@ module.exports = {
     3: (req, res) => {
       // No prefereces picked, redirect
       if (!req.body.preference) {
-        respond(req, res, 400, 'No preference chosen', '/ilmo');
+        respond(req, res, 400, 'signup_error_no_preference', '/ilmo');
         return;
       }
       if (!req.session.registration) {

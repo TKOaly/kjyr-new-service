@@ -1,3 +1,5 @@
+const locale = require('../config/localization.json');
+
 const statusMessages = {
   200: 'Success',
   400: 'Bad request, missing paramteres or wrong parameters?',
@@ -20,10 +22,10 @@ module.exports = {
       data
     });
   },
-  stepResponse: (req, res, status, message, redir) => {
+  stepResponse: (req, res, status, messageLocaleKey, redir) => {
     res.status(status);
     req.session.message = {};
-    req.session.message.val = message + ` (${status})`;
+    req.session.message.val = locale[req.session.lang][messageLocaleKey] + ` (${status})`;
     req.session.message.shown = false;
     res.redirect(redir);
   }
