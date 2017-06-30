@@ -290,7 +290,7 @@ module.exports = {
         if (!qres[0].dataValues.c === undefined || (Number(qres[0].dataValues.c) + cabinReservationSystem.getReservationCountForCabin(req.session.registration.cabin)) >= 4) {
           // The cabin is full, redirect back.
           req.session.registration.step = 4;
-          respond(req, res, 403, 'signup_error_cabin_full', '/ilmo');
+          respond(req, res, 403, 'signup_error_cabin_full', '/ilmo/4');
           return;
         }
 

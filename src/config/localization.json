@@ -256,6 +256,7 @@
         "infomail_footer": "Mvh,\r\n\r\n--\r\nMikko Rantanen \/ Med k\u00e4rlek, \u00e4ven din kryssningsv\u00e4rdinna"
     },
     "fi": {
+        "signup_error_cabin_resexp": "Hyttivaraus on vanhentunut",
         "signup_error_cabin_full": "Hytti on täynnä",
         "signup_error_no_cabin": "Ei hyttivalintaa",
         "signup_error_no_preference": "Valinta puutuu",
