@@ -248,7 +248,7 @@ html
                 each person in val.persons
                   - let postURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '?vanilla=true'
                   - let deleteURI = "/api/studorgs/" + person.studorgId + "/persons/" + person.id + '/delete?vanilla=true'
-                    form(action=postURI method="post" id="form" + person.id style="display: none")
+                    form(action=postURI method="post" id="form" + person.id style="display: none;")
                       .field
                         label(class="label")!=locale.admin_participant_firstname
                         input(type="text" class="input" name="firstname" value=person.firstname)
@@ -305,7 +305,8 @@ html
                       br
                       br
                       button(class="button is-success" type="submit" name="person_id" value=person.id class="update_button")=locale.admin_form_submit
-                  br
+                      br
+                      br
                   form(action=deleteURI method="post" id="deleteForm" + person.id  style="display: none")
                     button(class="button is-danger" type="submit")=locale.admin_studorg_delete
   script.
