@@ -14,7 +14,7 @@ function IlmoHandler() {
         req.session.message.shown = true;
       }
     }
-    if (Date.now() > Backend.Config.ilmo_end) {
+    if (Date.now() > Backend.Config.ilmo_end || Date.now() < Backend.Config.ilmo_start) {
       res.redirect('/');
       return;
     }

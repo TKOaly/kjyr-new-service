@@ -3,8 +3,8 @@ require('dotenv').config();
 
 module.exports = {
   year_abbreviation: '17',
-  ilmo_end: new Date('2017-10-27 23:59').getTime(),
-  ilmo_start: new Date('2016-10-27 23:59').getTime(),
+  ilmo_end: new Date('2017-10-11 23:59').getTime(),
+  ilmo_start: new Date('2017-09-25 12:00').getTime(),
   agelimit: 18,
   database: {
     host: process.env.KJYR_DB_HOST,
