@@ -348,7 +348,7 @@ module.exports = {
           // Tells the other persons chosing cabins that the person is done. 
           cabinReservationSystem.completeRegistration(reg.person);
           // Sends an email to the person with a bunch of nice information about the cruise.
-          createInfomail(person.email, person, req.session.lang === undefined ? 'fi' : req.session.lang);
+          createInfomail(person.email, reg.studOrg, req.session.lang === undefined ? 'fi' : req.session.lang);
         });
         req.session.registration.step = 6;
         res.redirect('/ilmo/' + 6);

@@ -7,33 +7,38 @@ let transporter = nodemailer.createTransport({
   port: process.env.KJYR_MAIL_PORT
 });
 
-module.exports = function sendEmail(address, person, lang) {
-  moment.locale(lang);
-  createTimetable(lang).then(timetable => {
+module.exports = function sendEmail(address, studorgId, lang) {
+  Backend.Dao.studorg.findOne({
+    where: {
+      id: studorgId
+    }
+  }).then(studorg => {
+    createTimetable(lang).then(timetable => {
 
-    let emailMessage = locale[lang].infomail_head + '\r\n\r\n';
-    emailMessage += timetable;
-    emailMessage += locale[lang].infomail_para_1 + '\r\n\r\n';
-    emailMessage += locale[lang].infomail_para_2 + '\r\n\r\n';
-    emailMessage += locale[lang].infomail_para_3 + '\r\n\r\n';
-    emailMessage += locale[lang].infomail_para_4 + '\r\n\r\n\r\n';
-    emailMessage += locale[lang].infomail_footer;
+      let emailMessage = locale[lang].infomail_head + '\r\n\r\n';
+      emailMessage += timetable;
+      emailMessage += locale[lang].infomail_para_1 + '\r\n\r\n';
+      emailMessage += locale[lang].infomail_para_2 + '\r\n\r\n';
+      emailMessage += locale[lang].infomail_para_3 + '\r\n\r\n';
+      emailMessage += locale[lang].infomail_para_4 + '\r\n\r\n\r\n';
+      emailMessage += locale[lang].infomail_footer;
 
-    transporter.sendMail({
-      from: `KJYR'${Backend.Config.year_abbreviation} <risteilyvastaava@tko-aly.fi`,
-      to: address,
-      subject: locale[lang].infomail_subject,
-      text: emailMessage
-    }, (err, info) => {
-      if (err) {
-        Backend.Logger.log(`Error: infomail not sent to ${address}.`);
-        Backend.Logger.log(err);
-      } else
-      Backend.Logger.log(`Error: infomail sent to ${address}.`);
-    })
-  }).catch(e => {
-    Backend.Logger.log('Error was thrown while building timetable');
-    Backend.Logger.log(e);
+      transporter.sendMail({
+        from: `KJYR' ${Backend.Config.year_abbreviation} <${studorg.email}`,
+        to: address,
+        subject: locale[lang].infomail_subject,
+        text: emailMessage
+      }, (err, info) => {
+        if (err) {
+          Backend.Logger.log(`Error: infomail not sent to ${address}.`);
+          Backend.Logger.log(err);
+        } else
+          Backend.Logger.log(`Error: infomail sent to ${address}.`);
+      })
+    }).catch(e => {
+      Backend.Logger.log('Error was thrown while building timetable');
+      Backend.Logger.log(e);
+    });
   });
 };
 
@@ -47,10 +52,10 @@ function createTimetable(lang) {
       throw new Error('Cruise not found');
     }
 
-    let str = `${locale[lang].infomail_dep_1}  ${moment(cruise.departure_1).format('LLLL')}\r\n`;
-    str += `${locale[lang].infomail_arr_1}  ${moment(cruise.arrival_1).format('LLLL')}\r\n`;
-    str += `${locale[lang].infomail_dep_2}  ${moment(cruise.departure_2).format('LLLL')}\r\n`;
-    str += `${locale[lang].infomail_arr_2}  ${moment(cruise.arrival_2).format('LLLL')}\r\n\r\n`;
+    let str = `${locale[lang].infomail_dep_1}  ${moment(cruise.departure_1).locale(lang).format('LLLL')}\r\n`;
+    str += `${locale[lang].infomail_arr_1}  ${moment(cruise.arrival_1).locale(lang).format('LLLL')}\r\n`;
+    str += `${locale[lang].infomail_dep_2}  ${moment(cruise.departure_2).locale(lang).format('LLLL')}\r\n`;
+    str += `${locale[lang].infomail_arr_2}  ${moment(cruise.arrival_2).locale(lang).format('LLLL')}\r\n\r\n`;
     return str;
   });
 }
