@@ -157,7 +157,7 @@ module.exports = {
         req.session.registration = {
           step: 1
         };
-      if (req.session.registration.studorg && req.session.registration.studorg) {
+      if (!req.session.registration.studorg && req.body.studorg) {
         // Do a check that the student organizations sign-up is open. Studorgs where the sign-up is still closed is
         // never listed in the front end, but there's always someone who tries to just POST straight to the backend.
         Backend.Dao.studorg.findOne({ where: { id: req.body.studorg } }).then(studorg => {
