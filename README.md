@@ -35,3 +35,7 @@ Go to `src/config/` and open the `config.js` file.
 
 - Use MongoDB for saving site content, and implement editing into the admin control panel.
 - Save reservations into the database.
+- Table reservations
+- Buying multiple breakfasts or buffets
+- Use async/await
+- Just refactor everything to reduce internal errors and crashes
