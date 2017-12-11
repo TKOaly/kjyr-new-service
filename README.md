@@ -8,7 +8,7 @@ KJYR registration system.
 
 ## Editing site content
 
-Go to `src/config/` and open the `localization.json` file.
+Go to `src/config/` and open the `localization.js` file.
 
 ## Configuring constants
 

@@ -1,4 +1,4 @@
-const localization = require('../../config/localization.json');
+const localization = require('../../config/localization.js');
 const stepHelpers = require('./registrationStepHandler')
 
 module.exports = new IlmoHandler();

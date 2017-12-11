@@ -62,7 +62,7 @@ app.use('/api', apiController);
 // Error handling
 // Express js detects a error handling middleware if it has 4 arguments 👌 👌 👌 
 
-const locale = require('./src/config/localization.json');
+const locale = require('./src/config/localization.js');
 app.use((err, req, res, next) => {
   if (err) {
     Backend.Logger.log(err, 'error');

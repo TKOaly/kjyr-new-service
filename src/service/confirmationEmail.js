@@ -1,4 +1,4 @@
-const locale = require('../config/localization.json');
+const locale = require('../config/localization.js');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
 

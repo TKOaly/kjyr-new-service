@@ -1,5 +1,5 @@
 // Module that handles steps
-const localization = require('../../config/localization.json');
+const localization = require('../../config/localization.js');
 const Person = require('../../models/person');
 const moment = require('moment');
 const CabinReservationSystem = require('../../service/CabinReservationSystem');

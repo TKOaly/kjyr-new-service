@@ -1,4 +1,4 @@
-const localization = require('../../config/localization.json');
+const localization = require('../../config/localization.js');
 
 module.exports = new StartpageHanlder();
 

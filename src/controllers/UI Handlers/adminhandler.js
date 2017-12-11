@@ -1,4 +1,4 @@
-const localization = require('../../config/localization.json');
+const localization = require('../../config/localization.js');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(13);
 

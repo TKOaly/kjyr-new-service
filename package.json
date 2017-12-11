@@ -28,6 +28,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
+    "clean": "rm -rf dist",
     "test": "mocha",
     "create-admin": "node ./dist/scripts/create_admin_user.js"
   }
