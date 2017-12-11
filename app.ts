@@ -1,25 +1,23 @@
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const MySQLSessionStore = require('express-mysql-session');
-const DB = require('./src/database');
-const Logger = require('./src/utils/logger');
-const app = express();
-const helmet = require('helmet');
+import 'reflect-metadata';
+import {createExpressServer} from "routing-controllers";
+import * as session from 'express-session';
+import  {MySQLSessionStore} from 'express-mysql-session';
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as helmet from 'helmet';
 
-require('dotenv').config();
+import IndexController from './src/controllers/IndexController';
 
-global.Backend = {};
-global.Backend.Logger = new Logger();
-global.Backend.Config = require('./src/config/config.js');
-global.Backend.Database = new DB();
-global.Backend.Dao = require('./src/models/model');
+global.Backend = {
+  Config: require('./src/config/config.js'),
+  Localization: require('./src/config/localization.js'),
+  Logger: null
+};
 
-// Routes
-const userInterfaceController = require('./src/controllers/ui');
-const apiController = require('./src/controllers/rest/api');
+const app : express.Express = createExpressServer({
+  controllers: [IndexController]
+});
 
-app.use(helmet());
 app.set('views', './public/views');
 app.set('view engine', 'pug');
 app.set('trust proxy', 1); // Should probably just be enabled for debugging.
@@ -28,64 +26,6 @@ app.set('trust proxy', 1); // Should probably just be enabled for debugging.
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-const options = {
-  createDatabaseTable: true,
-  schema: {
-    tableName: 'sessions',
-    columnNames: {
-      session_id: 'session_id',
-      expires: 'expires',
-      lang: 'lang'
-    }
-  }
-};
 
-// global.Backend.Database.init();
-//global.Backend.Database.getConnection().connect();
 
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: "vittumikätyömaa",
-  cookie: {
-    secure: false,
-    maxAge: 120 * 60000
-  }
-}));
-
-// Initialize routes.
-app.use('/', userInterfaceController);
-app.use('/api', apiController);
-
-// Error handling
-// Express js detects a error handling middleware if it has 4 arguments 👌 👌 👌 
-
-const locale = require('./src/config/localization.js');
-app.use((err, req, res, next) => {
-  if (err) {
-    global.Backend.Logger.log(err, 'error');
-    res.status(500);
-    res.render('error', {
-      locale,
-      config: global.Backend.Config
-    });
-  }
-});
-
-app.listen(5000, () => {
-  global.Backend.Logger.log('Server started!', 'info');
-});
-
-process.on('exit', e => {
-  console.log(e);
-  process.exit(1);
-});
-
-process.on('SIGINT', () => {
-  process.exit(1);
-});
-
-process.on('uncaughtException', e => {
-  console.log(e);
-  process.exit(1);
-});
+app.listen(3000);

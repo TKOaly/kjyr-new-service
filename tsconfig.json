@@ -3,6 +3,7 @@
       "target": "es6",
       "module": "commonjs",
       "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
       "allowJs": true,
       "sourceMap": true,
       "removeComments": true,

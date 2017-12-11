@@ -6,6 +6,7 @@
   "main": "pathToMain",
   "dependencies": {
     "bcrypt": "^1.0.2",
+    "bluebird": "^3.5.1",
     "body-parser": "1.17.1",
     "dotenv": "^4.0.0",
     "express": "4.15.2",
@@ -16,12 +17,16 @@
     "mysql": "2.13.0",
     "nodemailer": "^4.0.1",
     "pug": "^2.0.0-beta11",
-    "sequelize": "3.30.2",
-    "sqlite3": "^3.1.13",
+    "reflect-metadata": "^0.1.10",
+    "routing-controllers": "^0.7.6",
+    "sequelize": "^4.28.0",
+    "sequelize-typescript": "^0.6.1",
     "winston": "^2.3.1",
     "ws": "2.2.3"
   },
   "devDependencies": {
+    "@types/express": "^4.0.39",
+    "@types/knex": "0.0.67",
     "@types/node": "^8.0.57",
     "@types/sequelize": "^4.0.79",
     "mocha": "3.2.0",

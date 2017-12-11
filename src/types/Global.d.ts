@@ -1,5 +1,9 @@
 declare namespace NodeJS {
   export interface Global {
-    Backend: any
+    Backend: {
+      Config: any
+      Localization: any
+      Logger: any
+    }
   }
 }
