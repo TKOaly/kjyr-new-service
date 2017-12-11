@@ -4,3 +4,4 @@ node_modules/*
 admin_user.txt
 logs/
 .env
+dist/

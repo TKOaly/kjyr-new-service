@@ -1,5 +1,5 @@
 {
-  "name": "Mayhem",
+  "name": "kjyr-new-service",
   "description": "oispa",
   "authors": "hugeli",
   "version": "1.0.0",
@@ -21,12 +21,14 @@
     "ws": "2.2.3"
   },
   "devDependencies": {
+    "mocha": "3.2.0",
     "needle": "1.6.0",
-    "mocha": "3.2.0"
+    "typescript": "^2.6.2"
   },
   "scripts": {
-    "start": "node app.js",
+    "build": "tsc",
+    "start": "node dist/app.js",
     "test": "mocha",
-    "create-admin": "node ./scripts/create_admin_user.js"
+    "create-admin": "node ./dist/scripts/create_admin_user.js"
   }
 }
