@@ -21,6 +21,7 @@
     "ws": "2.2.3"
   },
   "devDependencies": {
+    "@types/node": "^8.0.57",
     "mocha": "3.2.0",
     "needle": "1.6.0",
     "typescript": "^2.6.2"
