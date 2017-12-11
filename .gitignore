@@ -5,3 +5,4 @@ admin_user.txt
 logs/
 .env
 dist/
+mayhem.sqlite

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     "en": {
         "signup_error_cabin_resexp": "Cabin reservation has expired",
         "signup_error_cabin_full": "Cabin is full",

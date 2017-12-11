@@ -39,3 +39,7 @@ Go to `src/config/` and open the `config.js` file.
 - Buying multiple breakfasts or buffets
 - Use async/await
 - Just refactor everything to reduce internal errors and crashes
+
+- TypeScript
+- Folder structure (MVC)
+- Single database class

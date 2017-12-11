@@ -25,7 +25,7 @@ app.set('view engine', 'pug');
 app.set('trust proxy', 1); // Should probably just be enabled for debugging.
 
 // Set folder that contains static content.
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('./public'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 const options = {
@@ -40,14 +40,13 @@ const options = {
   }
 };
 
-global.Backend.Database.init();
-global.Backend.Database.getConnection().connect();
-const sessionStore = new MySQLSessionStore(options, global.Backend.Database.getConnection());
+// global.Backend.Database.init();
+//global.Backend.Database.getConnection().connect();
+
 app.use(session({
   resave: false,
-  store: sessionStore,
   saveUninitialized: true,
-  secret: process.env.KJYR_COOKIE_SECRET,
+  secret: "vittumikätyömaa",
   cookie: {
     secure: false,
     maxAge: 120 * 60000
@@ -73,7 +72,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.listen(process.env.NODE_ENV === 'production' ? process.env.KJYR_PROD_PORT : process.env.KJYR_DBG_PORT, () => {
+app.listen(5000, () => {
   global.Backend.Logger.log('Server started!', 'info');
 });
 
