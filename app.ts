@@ -46,7 +46,7 @@ const options = {
 app.use(session({
   resave: false,
   saveUninitialized: true,
-  secret: "vittumikätyömaa",
+  secret: "sessionsecret",
   cookie: {
     secure: false,
     maxAge: 120 * 60000
