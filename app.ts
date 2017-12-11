@@ -5,13 +5,25 @@ import  {MySQLSessionStore} from 'express-mysql-session';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
+import Database from './src/Database';
+
+require('dotenv').config();
 
 import IndexController from './src/controllers/IndexController';
+
+let databse = new Database({
+  host: process.env.KJYR_DB_HOST,
+  username: process.env.KJYR_DB_USER,
+  password: process.env.KJYR_DB_PASSWORD,
+  database: process.env.KJYR_DB_NAME,
+  dialect: 'mysql'
+});
 
 global.Backend = {
   Config: require('./src/config/config.js'),
   Localization: require('./src/config/localization.js'),
-  Logger: null
+  Logger: null,
+  Models: databse.sequelize.models
 };
 
 const app : express.Express = createExpressServer({

@@ -4,6 +4,7 @@ declare namespace NodeJS {
       Config: any
       Localization: any
       Logger: any
+      Models: any
     }
   }
 }

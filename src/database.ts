@@ -1,11 +1,14 @@
 import { Sequelize, ISequelizeConfig } from 'sequelize-typescript';
-import * as models from './models/Models';
 
-export class Database {
+export default class Database {
   sequelize: Sequelize;
   constructor(opts: ISequelizeConfig) {
     this.sequelize = new Sequelize(opts);
-    this.sequelize.addModels(Object.keys(models).map(key => models[key]));
+    console.log('asdpasd1');
+    this.sequelize.addModels([__dirname + '/models']);
+    console.log('asdpasd2');
+    this.sequelize.sync().then(() => console.log('done')).catch(e => console.log(e));
+    console.log('asdpasd');
   }
 
 }
