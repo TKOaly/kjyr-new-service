@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const config = require('../src/config/config');
 const bcrypt = require('bcrypt');
 const FS = require('fs');
@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 connection.connect();
 const pw = Math.random().toString(36).slice(-8);
 const salt = bcrypt.hashSync(pw, 10);
-connection.query('insert into admins (username, passwordSalt, studOrg) values ("admin", "' + salt + '", 0)', (err, res) => {
+connection.query('insert into admin (username, passwordSalt, isAdmin, studOrgId, createdAt, updatedAt) values ("admin", "' + salt + '", 1, null, now(), now())', (err, res) => {
   if (!err) {
     FS.writeFileSync('admin_user.txt',`USERNAME: admin\nPASSWORD: ${pw}`);
     console.log('Check admin_user.txt!');

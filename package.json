@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.0.39",
+    "@types/express-session": "^1.15.6",
     "@types/knex": "0.0.67",
     "@types/node": "^8.0.57",
     "@types/sequelize": "^4.0.79",
@@ -38,6 +39,6 @@
     "start": "node dist/app.js",
     "clean": "rm -rf dist",
     "test": "mocha",
-    "create-admin": "node ./dist/scripts/create_admin_user.js"
+    "create-admin": "node ./scripts/create_admin_user.js"
   }
 }

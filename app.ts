@@ -1,15 +1,18 @@
 import 'reflect-metadata';
-import {createExpressServer} from "routing-controllers";
-import * as session from 'express-session';
-import  {MySQLSessionStore} from 'express-mysql-session';
+import { createExecutor, ExpressDriver } from 'routing-controllers';
+import { MySQLSessionStore } from 'express-mysql-session';
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as helmet from 'helmet';
 import Database from './src/Database';
 
 require('dotenv').config();
 
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+
 import IndexController from './src/controllers/IndexController';
+import LoginController from './src/controllers/LoginController';
+import AdminController from './src/controllers/AdminController';
 
 let databse = new Database({
   host: process.env.KJYR_DB_HOST,
@@ -26,17 +29,36 @@ global.Backend = {
   Models: databse.sequelize.models
 };
 
-const app : express.Express = createExpressServer({
-  controllers: [IndexController]
-});
+const expressDriver = new ExpressDriver();
+const app = expressDriver.app;
 
+app.use(express.static('./public'));
 app.set('views', './public/views');
 app.set('view engine', 'pug');
 app.set('trust proxy', 1); // Should probably just be enabled for debugging.
 
-// Set folder that contains static content.
-app.use(express.static('./public'));
+app.use(helmet());
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+app.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: process.env.KJYR_COOKIE_SECRET,
+  cookie: {
+    secure: false,
+    maxAge: 120 * 60000
+  }
+}));
+app.locals.moment = require('moment');
+
+// Register contollers
+createExecutor(expressDriver, {
+  controllers: [
+    IndexController,
+    LoginController,
+    AdminController
+  ]
+});
 
 app.listen(3000);
