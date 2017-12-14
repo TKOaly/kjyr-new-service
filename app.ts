@@ -3,10 +3,10 @@ import { createExecutor, ExpressDriver } from 'routing-controllers';
 import { MySQLSessionStore } from 'express-mysql-session';
 import * as express from 'express';
 import Database from './src/Database';
+import * as session from 'express-session';
 
 require('dotenv').config();
 
-const session = require('express-session');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 

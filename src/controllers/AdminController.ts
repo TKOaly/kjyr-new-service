@@ -4,18 +4,19 @@ import Person from '../models/Person';
 import Preference from '../models/Preference';
 import Cruise from '../models/Cruise';
 import Cabin from '../models/Cabin';
+import { KJYRSession, KJYRAuth } from '../utils/KJYRSession';
 
 @Controller('/admin')
 export default class UserController {
 
   @Get('/')
   @Render('admin')
-  async getAdminView( @Session() session: any, @Res() response: any) {
-    if (!session.role) {
+  async getAdminView( @Session() session: KJYRSession, @Res() response: any) {
+    if (!session.auth || !session.auth.role) {
       return response.redirect('/login');
     }
-
-    if (session.role === 'admin') {
+    
+    if (session.auth.role === 'admin') {
       let cabins = await Cabin.findAll({ include: [Person] });
       let preferences = await Preference.findAll();
       let cruise = await Cruise.findOne() || {};
@@ -29,7 +30,7 @@ export default class UserController {
         config: global.Backend.Config,
         adminMessage: '',
         userLanguage: session.lang,
-        isAdmin: session.role === 'admin',
+        isAdmin: session.auth.role === 'admin',
         locale: global.Backend.Localization[session.lang || 'fi']
       }
     }
