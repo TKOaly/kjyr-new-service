@@ -6,22 +6,22 @@ form(method='post', action='/ilmo/5')
     tbody
       tr
       td=locale.firstname
-      td=registration.person.firstname
+      td=person.firstname
       tr
       td=locale.lastname
-      td=registration.person.lastname
+      td=person.lastname
       tr
       td=locale.dob
-      td=registration.person.dob
+      td=person.dob
       tr
       td=locale.email
-      td=registration.person.email
+      td=person.email
       tr
       td=locale.studorg
       td=studorg.name
       tr
       td=locale.cabin
-      td=registration.cabin
+      td=person.cabin
       - let pref = '';
       tr
       td='Preference'

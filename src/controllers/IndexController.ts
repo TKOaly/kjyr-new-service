@@ -1,4 +1,5 @@
 import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore } from "routing-controllers";
+import * as express from 'express';
 import StudentOrganizations from '../models/StudentOrganization';
 import Person from '../models/Person';
 
@@ -25,8 +26,9 @@ export default class LoginController {
 
   @Post('/')
   @Redirect('/')
-  postIndex( @Body() body: any, @Req() request: any) {
+  postIndex( @Body() body: any, @Req() request: express.Request) {
     request.session.lang = body.languageSelect;
+    return request.headers.referer;
   }
 
 }

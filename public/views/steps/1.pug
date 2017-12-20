@@ -1,6 +1,6 @@
 h1(class="title is-3")=locale.step1_title
 p=locale.step1_para1
-  form(action="/ilmo/1" method="POST")
+  form(action="/signup/selectStudorg" method="POST")
     select(name="studorg" style="width: 40%;")
       each val, key in studorgs
         if val.ilmo_start.getTime() < new Date().getTime()

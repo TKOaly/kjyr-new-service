@@ -13,12 +13,14 @@ const helmet = require('helmet');
 import IndexController from './src/controllers/IndexController';
 import LoginController from './src/controllers/LoginController';
 import AdminController from './src/controllers/AdminController';
+import RegistrationController from './src/controllers/RegistrationController';
 
 let databse = new Database({
   host: process.env.KJYR_DB_HOST,
   username: process.env.KJYR_DB_USER,
   password: process.env.KJYR_DB_PASSWORD,
   database: process.env.KJYR_DB_NAME,
+  port: Number(process.env.KJYR_DB_PORT),
   dialect: 'mysql'
 });
 
@@ -57,7 +59,8 @@ createExecutor(expressDriver, {
   controllers: [
     IndexController,
     LoginController,
-    AdminController
+    AdminController,
+    RegistrationController
   ]
 });
 
