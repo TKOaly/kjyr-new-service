@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { createExecutor, ExpressDriver } from 'routing-controllers';
+import { createExecutor, ExpressDriver, Action } from 'routing-controllers';
 import { MySQLSessionStore } from 'express-mysql-session';
 import * as express from 'express';
 import Database from './src/Database';
@@ -14,6 +14,8 @@ import IndexController from './src/controllers/IndexController';
 import LoginController from './src/controllers/LoginController';
 import AdminController from './src/controllers/AdminController';
 import RegistrationController from './src/controllers/RegistrationController';
+
+import StudentOrganizationController from './src/controllers/API/StudentOrganizationController';
 
 let databse = new Database({
   host: process.env.KJYR_DB_HOST,
@@ -32,6 +34,7 @@ global.Backend = {
 };
 
 const expressDriver = new ExpressDriver();
+expressDriver.useClassTransformer = false;
 const app = expressDriver.app;
 
 app.use(express.static('./public'));
@@ -60,8 +63,27 @@ createExecutor(expressDriver, {
     IndexController,
     LoginController,
     AdminController,
-    RegistrationController
-  ]
+    RegistrationController,
+    StudentOrganizationController
+  ],
+  authorizationChecker: async (action: Action, roles: string[]) => {
+    if (!action.request.session) {
+      return false;
+    }
+
+    if (!action.request.session.auth) {
+      return false;
+    }
+
+    if (roles.length === 0) {
+      if (action.request.session.auth.role === 'studorg') {
+        return true;
+      }
+    } else if (roles[0] === 'admin') {
+      if (action.request.session.auth.role === 'admin') return true;
+    }
+    return false;
+  }
 });
 
 app.listen(3000);

@@ -3,6 +3,7 @@ import Admin from './Admin';
 import Person from './Person';
 import Cabin from './Cabin';
 
+import * as bcrypt from 'bcrypt';
 
 @Table({ timestamps: true })
 export default class StudentOrganization extends Model<StudentOrganization> {

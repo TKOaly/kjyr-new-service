@@ -91,27 +91,27 @@ html
       if isAdmin
         .box
           h1(class="title is-5")='Add new student organization'
-          form(action='/api/studorgs?vanilla=true' method='post')
+          form(action='/api/studorgs' method='post')
             label=locale.admin_studorg_name
             input(class="input" type='text' name='name' )
             br
             label=locale.admin_contact_email
-            input(class="input" type='text' name='contact_email' )
+            input(class="input" type='text' name='email' )
             br
             label=locale.admin_contact_telephone
-            input(class="input" type='text' name='contact_telephone')
+            input(class="input" type='text' name='phone')
             br
             label=locale.admin_ilmo_start
-            input(class="input datetime" type='text' name='ilmo_start' pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" required placeholder="YYYY-MM-DD HH:mm")
+            input(class="input datetime" type='text' name='ilmoStart' pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" required placeholder="YYYY-MM-DD HH:mm")
             br
             label=locale.admin_guardian_quota
-            input(class="input" type='number' name='guardian_quota')
+            input(class="input" type='number' name='guardianQuota')
             br
             label=locale.admin_cabin_quota
-            input(class="input" type='number' name='cabin_quota')
+            input(class="input" type='number' name='cabinQuota')
             br
             lable=locale.admin_cruise_cabin_price
-            input(class="input" type='number' name='cabin_price')
+            input(class="input" type='number' name='cabinPrice')
             br
             label=locale.login_password
             input(class="input" type='text' name='admin_password')
