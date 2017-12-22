@@ -40,4 +40,13 @@ export default class StudentOrganization extends Model<StudentOrganization> {
 
   @HasMany(() => Cabin)
   cabins: Cabin[];
+
+  createAdminUser(password: string): Admin {
+    let admin = new Admin();
+    admin.isAdmin = false;
+    admin.studOrgId = this.id;
+    admin.passwordSalt = bcrypt.hashSync(password, 10);
+    admin.save();
+    return admin;
+  }
 }

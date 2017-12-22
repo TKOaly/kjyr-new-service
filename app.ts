@@ -66,6 +66,7 @@ createExecutor(expressDriver, {
     RegistrationController,
     StudentOrganizationController
   ],
+  classTransformer: false, // enable when es6 compatible
   authorizationChecker: async (action: Action, roles: string[]) => {
     if (!action.request.session) {
       return false;

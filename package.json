@@ -8,6 +8,7 @@
     "bcrypt": "^1.0.2",
     "bluebird": "^3.5.1",
     "body-parser": "1.17.1",
+    "class-transformer": "^0.1.8",
     "dotenv": "^4.0.0",
     "express": "4.15.2",
     "express-mysql-session": "1.2.0",

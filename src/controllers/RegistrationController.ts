@@ -4,6 +4,8 @@ import Person from '../models/Person';
 import Preference from '../models/Preference';
 import Cabin from '../models/Cabin';
 
+import * as moment from 'moment';
+
 import { KJYRSession, KJYRRegistration } from '../utils/KJYRSession';
 
 @Controller('/signup')
@@ -48,7 +50,11 @@ export default class RegistrationController {
           studorgs: await StudentOrganizations.findAll()
         }
       },
-      2: {},
+      2: async () => {(
+        {
+          person: session.registration.person
+        }
+      )},
       3: async () => {
         (
           {
@@ -66,7 +72,7 @@ export default class RegistrationController {
       5: async () => {
         (
           {
-            studorgs: session.registration.person.studentOrganization
+            studorgs: session.registration.person.studentOrganization,
           }
         )
       }
@@ -78,8 +84,19 @@ export default class RegistrationController {
   @Redirect('/signup')
   selectStudorg(@Session() session: KJYRSession, @Body() body: any) {
     if (body.studorg) {
+      if (!session.registration.person) {
+        session.registration.person = new Person();
+      }
       session.registration.person.studOrgId = body.studorg;
       session.registration.step = 2;
+    }
+  }
+
+  @Post('/addPersonDetails')
+  @Redirect('/signup')
+  addPersonDetails(@Session() session: KJYRSession, @Body() body: any) {
+    if (!body.birthDate) {
+      body.birthDate = moment(`${body.month}-${body.day}-${body.year}`, 'MM-DD-YYYY').toDate();
     }
   }
 }

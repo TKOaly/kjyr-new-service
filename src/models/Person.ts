@@ -45,4 +45,8 @@ export default class Person extends Model<Person> {
   @Column
   reservationUUID: string;
 
+  validateAndApplyPostData(postData: any): void {
+    
+  }
+
 }

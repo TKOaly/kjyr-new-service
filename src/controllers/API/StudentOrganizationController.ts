@@ -13,7 +13,7 @@ export default class StudentOrganizationController {
     @Authorized('admin')
     async addStudentOrganization( @Session() session: KJYRSession, @Body() studorg: any, @Res() response: Response) {
         let newStudorg = new StudentOrganizations(studorg);
-        //newStudorg.createAdminUser(studorg.admin_password);
-        return await newStudorg.save();
+        newStudorg.createAdminUser(studorg.admin_password);
+        return '/admin';
     }
 }
