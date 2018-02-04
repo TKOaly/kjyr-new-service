@@ -11,7 +11,7 @@ export default class UserController {
 
   @Get('/')
   @Render('login')
-  async getAdminView( @Session() session: KJYRSession) {
+  getAdminView( @Session() session: KJYRSession) {
     if (session.auth && session.auth.role) {
       return '/admin';
     }
