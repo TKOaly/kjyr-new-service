@@ -1,21 +1,29 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, IsEmail, IsBefore } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, IsEmail, IsBefore, Is } from 'sequelize-typescript';
 import StudentOrganization from './StudentOrganization';
 import Cabin from './Cabin';
 import Preference from './Preference';
 import PersonPreferences from './PersonPreference';
 
 import * as moment from 'moment';
+import { NotNull } from 'sequelize-typescript/lib/annotations/validation/NotNull';
 
 @Table({ timestamps: true })
 export default class Person extends Model<Person> {
 
   @Column
+  @NotNull
   firstName: string;
 
   @Column
+  @NotNull
   lastName: string;
 
-  @IsBefore(moment(new Date(Date.now() - (18 * 365 * 24 * 60 * 60 * 1000))).toISOString())
+  @Is('eighten', value => {
+    if (moment.duration(moment(new Date()).diff(moment(value, 'MM-DD-YYYY'))).asYears() > 18) {
+      return true
+    } else throw new Error('Not old enough');
+  })
+  @NotNull
   @Column
   birthDate: Date;
 
@@ -25,6 +33,7 @@ export default class Person extends Model<Person> {
 
   @ForeignKey(() => StudentOrganization)
   @Column
+  @NotNull
   studOrgId: number;
 
   @BelongsTo(() => StudentOrganization)
@@ -48,9 +57,5 @@ export default class Person extends Model<Person> {
 
   @Column
   reservationUUID: string;
-
-  validateAndApplyPostData(postData: any): void {
-    
-  }
 
 }
