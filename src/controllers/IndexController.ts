@@ -1,4 +1,4 @@
-import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore } from "routing-controllers";
+import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore } from 'routing-controllers';
 import * as express from 'express';
 import StudentOrganization from '../models/StudentOrganization';
 import Person from '../models/Person';

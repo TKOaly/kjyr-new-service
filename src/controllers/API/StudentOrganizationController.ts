@@ -1,6 +1,6 @@
 import {
     Render, Get, Post, Session, Res, Body, Req, Param, Authorized, JsonController
-} from "routing-controllers";
+} from 'routing-controllers';
 import { Request, Response } from 'express';
 
 import { KJYRSession, KJYRRegistration } from '../../utils/KJYRSession';

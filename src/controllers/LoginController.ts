@@ -1,4 +1,4 @@
-import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore } from "routing-controllers";
+import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore } from 'routing-controllers';
 import StudentOrganizations from '../models/StudentOrganization';
 import Admin from '../models/Admin';
 

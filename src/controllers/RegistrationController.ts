@@ -1,4 +1,4 @@
-import { Controller, Render, Get, Post, Session, Redirect, Body, Req, Param } from "routing-controllers";
+import { Controller, Render, Get, Post, Session, Redirect, Body, Req, Param } from 'routing-controllers';
 import StudentOrganizations from '../models/StudentOrganization';
 import Person from '../models/Person';
 import Preference from '../models/Preference';
@@ -98,5 +98,7 @@ export default class RegistrationController {
     if (!body.birthDate) {
       body.birthDate = moment(`${body.month}-${body.day}-${body.year}`, 'MM-DD-YYYY').toDate();
     }
+    let person = new Person(body);
+    person.validate();
   }
 }
