@@ -10,12 +10,12 @@ import { NotNull } from 'sequelize-typescript/lib/annotations/validation/NotNull
 @Table({ timestamps: true })
 export default class Person extends Model<Person> {
 
-  @Column
   @NotNull
+  @Column
   firstName: string;
 
-  @Column
   @NotNull
+  @Column
   lastName: string;
 
   @Is('eighten', value => {
@@ -32,8 +32,8 @@ export default class Person extends Model<Person> {
   email: string;
 
   @ForeignKey(() => StudentOrganization)
-  @Column
   @NotNull
+  @Column
   studOrgId: number;
 
   @BelongsTo(() => StudentOrganization)

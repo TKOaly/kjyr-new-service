@@ -4,6 +4,7 @@ import { MySQLSessionStore } from 'express-mysql-session';
 import * as express from 'express';
 import Database from './src/Database';
 import * as session from 'express-session';
+import * as flash from 'express-flash';
 
 require('dotenv').config();
 
@@ -16,6 +17,7 @@ import AdminController from './src/controllers/AdminController';
 import RegistrationController from './src/controllers/RegistrationController';
 
 import StudentOrganizationController from './src/controllers/API/StudentOrganizationController';
+import SessionMessageHandler from './src/utils/SessionMessageHandler';
 
 let databse = new Database({
   host: process.env.KJYR_DB_HOST,
@@ -46,6 +48,7 @@ app.use(helmet());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+app.use(flash())
 app.use(session({
   saveUninitialized: true,
   resave: true,

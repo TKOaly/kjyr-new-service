@@ -1,4 +1,4 @@
-import { Controller, Render, Get, Post, Session, Redirect, Body, Req, Param } from 'routing-controllers';
+import { Controller, Render, Get, Post, Session, Redirect, Body, Req, Param, Res, UseBefore, RedirectOrRender } from 'routing-controllers';
 import StudentOrganizations from '../models/StudentOrganization';
 import Person from '../models/Person';
 import Preference from '../models/Preference';
@@ -6,7 +6,8 @@ import Cabin from '../models/Cabin';
 
 import * as moment from 'moment';
 
-import { KJYRSession, KJYRRegistration } from '../utils/KJYRSession';
+import { KJYRSession, KJYRRegistration, flashMessage } from '../utils/KJYRSession';
+import SessionMessageHandler from '../utils/SessionMessageHandler';
 
 @Controller('/signup')
 export default class RegistrationController {
@@ -24,23 +25,24 @@ export default class RegistrationController {
   }
 
   @Get('/:step')
-  @Render('signup')
-  async getSignup( @Session() session: KJYRSession, @Param('step') step: number) {
+  @RedirectOrRender('signup')
+  async getSignup( @Session() session: KJYRSession, @Param('step') step: number, @Res() res: any) {
     if (!session.registration) {
       session.registration = new KJYRRegistration();
       session.registration.step = 1;
     }
     if (step > session.registration.step) {
-      return '/signup/' + session.registration.step;
+      return '/signup';
     }
     let registrationStepParameters = await this.getRegistrationStepParams(step, session);
-    return Object.assign({
+    return res.render('signup', Object.assign({
       nStep: session.registration.step,
       person: session.registration.person,
       config: global.Backend.Config,
       userLanguage: session.lang,
-      locale: global.Backend.Localization[session.lang || 'fi']
-    }, registrationStepParameters);
+      locale: global.Backend.Localization[session.lang || 'fi'],
+      message: session.message
+    }, registrationStepParameters));
   }
 
   async getRegistrationStepParams(step: number, session: KJYRSession): Promise<any> {
@@ -94,11 +96,14 @@ export default class RegistrationController {
 
   @Post('/addPersonDetails')
   @Redirect('/signup')
-  addPersonDetails(@Session() session: KJYRSession, @Body() body: any) {
+  addPersonDetails(@Session() session: KJYRSession, @Body() body: any, @Req() request) {
     if (!body.birthDate) {
       body.birthDate = moment(`${body.month}-${body.day}-${body.year}`, 'MM-DD-YYYY').toDate();
     }
     let person = new Person(body);
-    person.validate();
+    session.registration.person = person;
+    person.validate().catch(error => {
+      flashMessage(session, 'danger', global.Backend.Localization[session.lang].signup_error_user_is_kid);
+    });
   }
 }

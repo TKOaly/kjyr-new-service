@@ -1,4 +1,4 @@
-import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore, Res } from 'routing-controllers';
+import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore, Res, RedirectOrRender } from 'routing-controllers';
 import StudentOrganization from '../models/StudentOrganization';
 import Person from '../models/Person';
 import Preference from '../models/Preference';
@@ -12,9 +12,10 @@ import * as express from 'express';
 export default class AdminController {
 
   @Get('/')
+  @RedirectOrRender('admin')
   async getAdminView( @Session() session: KJYRSession, @Res() response: express.Response) {
     if (!session.auth || !session.auth.role) {
-      return response.redirect('/login');
+      return '/login';
     } else {
       if (session.auth.role === 'admin') {
         let cabins = await Cabin.findAll({ include: [Person] });

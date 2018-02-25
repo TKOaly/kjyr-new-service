@@ -16,5 +16,18 @@ export class KJYRAuth {
 export interface KJYRSession extends Express.Session {
   lang: string;
   auth: KJYRAuth;
+  message: {
+    type: 'danger' | 'info' | 'success',
+    seen: boolean,
+    content: string
+  };
   registration: KJYRRegistration;
+}
+
+export function flashMessage(session: KJYRSession, type: 'danger' | 'info' | 'success', content: string) {
+  session.message = {
+    type,
+    seen: false,
+    content
+  };
 }
