@@ -4,30 +4,34 @@ import Person from '../models/Person';
 export class KJYRRegistration {
   step: number;
   person: Person;
-  constructor() {}
+  constructor() { }
 }
 
 export class KJYRAuth {
   constructor(
-    public role: string, 
-    public studentOrganization: StudentOrganization) {}
+    public role: string,
+    public studentOrganization: StudentOrganization) { }
+}
+
+export class KJYRFlashMessage {
+  constructor(
+    public type: 'danger' | 'info' | 'success',
+    public seen: boolean,
+    public content: string) { }
+
+   displayAndDispose() {
+    this.seen = true;
+    return this.content;
+  }
 }
 
 export interface KJYRSession extends Express.Session {
   lang: string;
   auth: KJYRAuth;
-  message: {
-    type: 'danger' | 'info' | 'success',
-    seen: boolean,
-    content: string
-  };
+  message: KJYRFlashMessage;
   registration: KJYRRegistration;
 }
 
 export function flashMessage(session: KJYRSession, type: 'danger' | 'info' | 'success', content: string) {
-  session.message = {
-    type,
-    seen: false,
-    content
-  };
+  session.message = new KJYRFlashMessage(type, false, content);
 }

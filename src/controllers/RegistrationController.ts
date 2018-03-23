@@ -96,14 +96,16 @@ export default class RegistrationController {
 
   @Post('/addPersonDetails')
   @Redirect('/signup')
-  addPersonDetails(@Session() session: KJYRSession, @Body() body: any, @Req() request) {
+  async addPersonDetails(@Session() session: KJYRSession, @Body() body: any, @Req() request) {
     if (!body.birthDate) {
       body.birthDate = moment(`${body.month}-${body.day}-${body.year}`, 'MM-DD-YYYY').toDate();
     }
     let person = new Person(body);
     session.registration.person = person;
-    person.validate().catch(error => {
-      flashMessage(session, 'danger', global.Backend.Localization[session.lang].signup_error_user_is_kid);
-    });
+    try {
+      await person.validate();
+    } catch (error) {
+      flashMessage(request.session, 'danger', global.Backend.Localization[session.lang || 'fi'].signup_error_user_is_kid);
+    }
   }
 }

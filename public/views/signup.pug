@@ -7,9 +7,8 @@ html
   body
     include components/navbar.pug
     .container
-      if messages.error != null
-        - console.log(messages)
-        div(class=`notification is-error`)=messages.error
+      if message != null
+        div(class=`notification is-${message.type}`)=message.displayAndDispose()
       progress(class="progress is-info is-large" value=((nStep / 6) * 100) max=100)
       .box
         if nStep > 1 && nStep < 6

@@ -4,7 +4,6 @@ import { MySQLSessionStore } from 'express-mysql-session';
 import * as express from 'express';
 import Database from './src/Database';
 import * as session from 'express-session';
-import * as flash from 'express-flash';
 
 require('dotenv').config();
 
@@ -48,7 +47,6 @@ app.use(helmet());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-app.use(flash())
 app.use(session({
   saveUninitialized: true,
   resave: true,
@@ -58,6 +56,7 @@ app.use(session({
     maxAge: 120 * 60000
   }
 }));
+app.use(new SessionMessageHandler().use);
 app.locals.moment = require('moment');
 
 // Register contollers
