@@ -11,18 +11,18 @@ form(method="post" action="/signup/addPersonDetails")
       td
         .field
         label(class="label")=locale.firstname
-          input(class="input" type="text" name="firstname" value=person.firstname required)
+          input(class="input" type="text" name="firstname" value=person.firstName required)
 
       tr
       td
         .field
           label(class="label")=locale.lastname
-            input(class="input" type="text" name="lastname" value=person.lastname required)
+            input(class="input" type="text" name="lastname" value=person.lastName required)
       tr
       td
         .field
           label(class="label")=locale.dob
-            - let date = moment(person.dob).format('YYYY-MM-DD');
+            - let date = moment(person.birthDate).format('YYYY-MM-DD');
             input(data-toggle='datepicker' name="birthDate" class="input" type="text" id="datepicker" value=date)
             noscript
               input(class="input" type="text" name="day" value=person.day placeholder="Day" required)
