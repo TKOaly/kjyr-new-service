@@ -1,5 +1,5 @@
 import {
-    Render, Get, Post, Session, Res, Body, Req, Param, Authorized, JsonController
+    Render, Get, Post, Session, Res, Body, Req, Param, Authorized, JsonController, Redirect
 } from 'routing-controllers';
 import { Request, Response } from 'express';
 
@@ -10,9 +10,21 @@ import StudentOrganization from "../../models/StudentOrganization";
 export default class StudentOrganizationController {
     @Post('/')
     @Authorized('admin')
+    @Redirect('/admin')
     async addStudentOrganization( @Session() session: KJYRSession, @Body() studorg: any, @Res() response: Response) {
         let newStudorg = new StudentOrganization(studorg);
         newStudorg.createAdminUser(studorg.admin_password);
-        return '/admin';
+        try {
+            await newStudorg.validate();
+        } catch(e) {
+            return '/admin'
+        }
+    }
+
+    @Post('/:id/delete')
+    @Authorized('admin')
+    @Redirect('admin')
+    deleteStudorg( @Param('id') id: number ) {
+        StudentOrganization.destroy({ where: { id }});
     }
 }

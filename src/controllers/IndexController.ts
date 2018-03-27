@@ -3,12 +3,18 @@ import * as express from 'express';
 import StudentOrganization from '../models/StudentOrganization';
 import Person from '../models/Person';
 
+/**
+ * Controller for handling the landing page. 
+ */
+
 @Controller()
-export default class LoginController {
+export default class IndexController {
 
   @Get('/')
   @Render('index')
   async getIndex( @Session() session: any) {
+    // Fetch student organizations for the table for registration times
+    // and participant count for stats.
     let studorgs = await StudentOrganization.findAll();
     let participants = await Person.count();
     let stats = {

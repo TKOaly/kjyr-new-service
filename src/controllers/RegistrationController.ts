@@ -10,6 +10,10 @@ import { KJYRSession, KJYRRegistration, flashMessage } from '../utils/KJYRSessio
 import SessionMessageHandler from '../utils/SessionMessageHandler';
 import LocalizedInputError from '../utils/LocalizedInputError';
 
+/**
+ * This controller is the main entrypoint for everything related to the signup process.
+ */
+
 @Controller('/signup')
 export default class RegistrationController {
 
@@ -46,6 +50,7 @@ export default class RegistrationController {
     }, registrationStepParameters));
   }
 
+  // Vittu mikä systeemi :DD
   async getRegistrationStepParams(step: number, session: KJYRSession): Promise<any> {
     let params = {
       1: async () => {

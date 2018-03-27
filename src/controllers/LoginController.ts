@@ -4,10 +4,13 @@ import Admin from '../models/Admin';
 
 import { KJYRSession, KJYRAuth } from '../utils/KJYRSession';
 
-const bcrypt = require('bcrypt');
+import * as bcrypt from 'bcrypt';
+/**
+ * Controller for handling login actions to the admin control panel
+ */
 
 @Controller('/login')
-export default class UserController {
+export default class LoginController {
 
   @Get('/')
   @Render('login')
@@ -28,6 +31,7 @@ export default class UserController {
     let username = body.username;
     let password = body.passwd;
     let adminUser =  await Admin.find({ where: { username }, include: [StudentOrganizations] });
+    // Check the password hashes.
     if (bcrypt.compareSync(password, adminUser.passwordSalt)) {
       session.auth = new KJYRAuth(adminUser.isAdmin ? 'admin' : 'studorg', adminUser.studentOrganization);
     }
