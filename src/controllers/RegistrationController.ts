@@ -8,6 +8,7 @@ import * as moment from 'moment';
 
 import { KJYRSession, KJYRRegistration, flashMessage } from '../utils/KJYRSession';
 import SessionMessageHandler from '../utils/SessionMessageHandler';
+import LocalizedInputError from '../utils/LocalizedInputError';
 
 @Controller('/signup')
 export default class RegistrationController {
@@ -105,7 +106,9 @@ export default class RegistrationController {
     try {
       await person.validate();
     } catch (error) {
-      flashMessage(request.session, 'danger', global.Backend.Localization[session.lang || 'fi'].signup_error_user_is_kid);
+      // Check that the 'errors' array isn't empty
+      let localizedInputError = new LocalizedInputError(error.errors[0].message.errorKey);
+      flashMessage(request.session, 'danger', localizedInputError.getLocalizedErrorMessage(session.lang));
     }
   }
 }

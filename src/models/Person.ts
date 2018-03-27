@@ -6,6 +6,8 @@ import PersonPreferences from './PersonPreference';
 
 import * as moment from 'moment';
 import { NotNull } from 'sequelize-typescript/lib/annotations/validation/NotNull';
+import LocalizedInputError from '../utils/LocalizedInputError';
+
 
 @Table({ timestamps: true })
 export default class Person extends Model<Person> {
@@ -21,7 +23,7 @@ export default class Person extends Model<Person> {
   @Is('eighten', value => {
     if (moment.duration(moment(new Date()).diff(moment(value, 'MM-DD-YYYY'))).asYears() > 18) {
       return true
-    } else throw new Error('Not old enough');
+    } else throw new LocalizedInputError('signup_error_user_is_kid');
   })
   @NotNull
   @Column
