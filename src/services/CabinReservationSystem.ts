@@ -63,8 +63,8 @@ class CabinReservationSystem extends EventFeeder {
       event: 'RESERVATION_COMPLETE',
       person: {
         reservationId: person.reservationUUID,
-        firstname: person.firstname,
-        lastname: person.lastname
+        firstname: person.firstName,
+        lastname: person.lastName
       }
     });
   }
