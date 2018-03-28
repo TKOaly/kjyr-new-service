@@ -41,7 +41,7 @@ export default class RegistrationController {
     }
     let registrationStepParameters = await this.getRegistrationStepParams(step, session);
     return res.render('signup', Object.assign({
-      nStep: session.registration.step,
+      nStep: step,
       person: session.registration.person,
       config: global.Backend.Config,
       userLanguage: session.lang,
@@ -107,13 +107,18 @@ export default class RegistrationController {
       body.birthDate = moment(`${body.month}-${body.day}-${body.year}`, 'MM-DD-YYYY').toDate();
     }
     let person = new Person(body);
+    person.studOrgId = session.registration.person.studOrgId
     session.registration.person = person;
     try {
-      await person.validate();
+      await person.validate({
+        skip: ['cabinId'] // Cabin is chosen later
+      });
     } catch (error) {
       // Check that the 'errors' array isn't empty
-      let localizedInputError = new LocalizedInputError(error.errors[0].message.errorKey);
-      flashMessage(request.session, 'danger', localizedInputError.getLocalizedErrorMessage(session.lang));
+      if (error.errors.size != 0) {
+        let errorString = error.errors.map(err => (err.message + '\n'));
+        flashMessage(request.session, 'danger', errorString);
+      }
     }
   }
 }
