@@ -1,13 +1,24 @@
-const EventFeeder = require('../controllers/EventFeeder');
+import Person from '../models/Person';
+import { EventFeeder, Event } from '../controllers/EventFeeder';
+
 const moment = require('moment');
 
 var self;
 
+class BucketItem {
+  constructor(
+    public timestamp: Date,
+    public cabinId: Number,
+    public person: Person) { }
+}
+
 class CabinReservationSystem extends EventFeeder {
+  bucket: Map<String, BucketItem>
+
   constructor() {
     super();
     this.init('/cabins');
-    this.bucket = {};
+    this.bucket = new Map();
     self = this;
     setInterval(() => {
       let now = new Date();
@@ -28,21 +39,9 @@ class CabinReservationSystem extends EventFeeder {
    * @param {*} person 
    * @param {*} cabinId 
    */
-  registerPersonToCabin(person, cabinId) {
-    self.bucket[person.reservationUUID] = {
-      timestamp: new Date(),
-      cabinId,
-      person
-    };
-    self.send({
-      event: 'ADD',
-      cabinId,
-      person: [person].map(p => ({
-        reservationId: p.reservationUUID,
-        firstname: p.firstname,
-        lastname: p.lastname
-      }))[0]
-    });
+  registerPersonToCabin(person: Person, cabinId: Number) {
+    this.bucket.set(person.reservationUUID, new BucketItem(new Date(), cabinId, person));
+    this.send(new Event('ADD', cabinId, person.getPublicPerson()));
   }
 
   /**
@@ -50,7 +49,7 @@ class CabinReservationSystem extends EventFeeder {
    * @param {*} reservationId 
    * @param {*} cabinId 
    */
-  removePerson(reservationId, cabinId) {
+  removePerson(reservationId: string, cabinId: Number) {
     self.deletePersonFromBucket(reservationId, cabinId);
   }
 
@@ -58,8 +57,8 @@ class CabinReservationSystem extends EventFeeder {
    * Removes a reservation only from the bucket.
    * @param {*} cabinId 
    */
-  completeRegistration(person) {
-    delete self.bucket[person.reservationUUID];
+  completeRegistration(person: Person) {
+    this.bucket.delete(person.reservationUUID);
     self.send({
       event: 'RESERVATION_COMPLETE',
       person: {
@@ -73,9 +72,9 @@ class CabinReservationSystem extends EventFeeder {
   /**
    * Gets amount of resercations for a cabin
    */
-  getReservationCountForCabin(cabinId) {
+  getReservationCountForCabin(cabinId: Number) {
     let res = 0;
-    for (let key in self.bucket) {
+    for (let key in this.bucket.keys()) {
       if (self.bucket[key].cabinId == cabinId)
         res++;
     }
@@ -87,30 +86,20 @@ class CabinReservationSystem extends EventFeeder {
    * @param {*} reservationId 
    * @param {*} cabinId 
    */
-  deletePersonFromBucket(reservationId, cabinId) {
-    delete self.bucket[reservationId];
-    self.send({
-      event: 'REMOVE',
-      cabinId,
-      person: {
-        reservationId
-      }
-    });
+  deletePersonFromBucket(reservationUUID: string, cabinId: Number) {
+    this.bucket.delete(reservationUUID);
+    self.send(new Event('REMOVE', cabinId, { reservationUUID }));
   }
 
   /**
    * Updates a value in the bucket and sends a update packet to the frontend
    */
-  updateBucketValue(key, person) {
-    let value = self.bucket[key];
+  updateBucketValue(reservationUUID: string, person: Person) {
+    let value = this.bucket.get(reservationUUID);
     if (value) {
-      value.person = person;
-      self.bucket[key] = value;
-      self.send({
-        event: 'UPDATE',
-        cabinId: value.cabinId,
-        person: value.person
-      });
+      value.person = person
+      this.bucket.set(reservationUUID, value);
+      self.send(new Event('UPDATE', value.cabinId, person.getPublicPerson()))
     }
   }
 
@@ -120,24 +109,12 @@ class CabinReservationSystem extends EventFeeder {
    * @param {*} reservationUUID 
    */
   changeCabinForUser(cabinId, reservationUUID) {
-    let reservation = self.bucket[reservationUUID];
+    let reservation = this.bucket.get(reservationUUID);
     if (reservation) {
       let startTime = reservation.timestamp;
       self.deletePersonFromBucket(reservationUUID, reservation.cabinId);
-      self.bucket[reservation.person.reservationUUID] = {
-        timestamp: startTime,
-        cabinId,
-        person: reservation.person
-      };
-      self.send({
-        event: 'ADD',
-        cabinId,
-        person: [reservation.person].map(p => ({
-          reservationId: p.reservationUUID,
-          firstname: p.firstname,
-          lastname: p.lastname
-        }))[0]
-      });
+      this.bucket.set(reservationUUID, new BucketItem(startTime, cabinId, reservation.person));
+      self.send(new Event('ADD', cabinId, reservation.person));
     }
   }
 }
