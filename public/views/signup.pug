@@ -12,7 +12,7 @@ html
       progress(class="progress is-info is-large" value=((nStep / 6) * 100) max=100)
       .box
         if nStep > 1 && nStep < 6
-          a(class="button is-danger" href='/ilmo/' + (nStep == 1 ? 1 : nStep - 1))=locale.back_button
+          a(class="button is-danger" href='/signup/' + (nStep == 1 ? 1 : nStep - 1))=locale.back_button
         br
         - // https://github.com/pugjs/pug/issues/1312 pls
           if nStep == 1
