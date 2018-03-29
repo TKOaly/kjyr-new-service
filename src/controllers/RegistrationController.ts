@@ -96,10 +96,23 @@ export default class RegistrationController {
 
   @Post('/selectStudorg')
   @Redirect('/signup')
-  selectStudorg(@Session() session: KJYRSession, @Body() body: any) {
+  async selectStudorg(@Session() session: KJYRSession, @Body() body: any) {
     if (body.studorg) {
       if (!session.registration.person) {
         session.registration.person = new Person();
+      }
+      let studorg = await StudentOrganizations.findOne({where: { id: body.studorg }, attributes: ['ilmoStart']});
+
+      // User tried signing up to a student organization that doesn't exsist
+      if (!studorg) {
+        flashMessage(session, 'danger', 'Student organization doesn\'t exsist');
+        return '/signup';
+      }
+
+      // User tried signing up to a student organization where the signup is still closed
+      if (studorg.ilmoStart.getTime() > Date.now()) {
+        flashMessage(session, 'danger', 'Signup not yet open');
+        return '/signup';
       }
       session.registration.person.studOrgId = body.studorg;
       session.registration.step = 2;
@@ -122,10 +135,12 @@ export default class RegistrationController {
     } catch (error) {
       // Check that the 'errors' array isn't empty
       if (error.errors.size != 0) {
-        let errorString = error.errors.map(err => (err.message + '\n'));
+        let errorString = error.errors.map(err => (err.message + '</br>'));
         flashMessage(request.session, 'danger', errorString);
+        return '/signup';
       }
     }
+    session.registration.step = 3;
   }
 
   @Post('/addPersonPrefs')

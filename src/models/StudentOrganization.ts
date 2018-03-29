@@ -1,4 +1,4 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, AllowNull } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, AllowNull, Length } from 'sequelize-typescript';
 import Admin from './Admin';
 import Person from './Person';
 import Cabin from './Cabin';
@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 export default class StudentOrganization extends Model<StudentOrganization> {
 
   @AllowNull(false)
+  @Length({ min: 1 })
   @Column
   name: string;
 

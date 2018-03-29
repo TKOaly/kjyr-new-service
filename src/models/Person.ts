@@ -1,4 +1,4 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, IsEmail, IsBefore, Is, AllowNull } from 'sequelize-typescript';
+import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, IsEmail, IsBefore, Is, AllowNull, Length } from 'sequelize-typescript';
 import StudentOrganization from './StudentOrganization';
 import Cabin from './Cabin';
 import Preference from './Preference';
@@ -12,10 +12,12 @@ import LocalizedInputError from '../utils/LocalizedInputError';
 export default class Person extends Model<Person> {
 
   @AllowNull(false)
+  @Length({ min: 1 })
   @Column
   firstName: string;
 
   @AllowNull(false)
+  @Length({ min: 1 })
   @Column
   lastName: string;
 
