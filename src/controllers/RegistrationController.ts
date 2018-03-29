@@ -55,7 +55,13 @@ export default class RegistrationController {
     let params = {
       1: async () => {
         return {
-          studorgs: await StudentOrganizations.findAll()
+          studorgs: await StudentOrganizations.findAll({
+            where: {
+              ilmoStart: {
+                $lte: new Date()
+              }
+            }
+          })
         }
       },
       2: async () => {(
@@ -121,4 +127,10 @@ export default class RegistrationController {
       }
     }
   }
+
+  @Post('/addPersonPrefs')
+  @Redirect('signup')
+  async addPersonPrefs(@Session() session: KJYRSession, @Body() body: any) {
+    
+  } 
 }
