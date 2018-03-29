@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 module.exports = {
-  year_abbreviation: '17',
+  year_abbreviation: '18',
   ilmo_end: new Date('2018-10-11 23:59').getTime(),
   ilmo_start: new Date('2016-09-23 12:00').getTime(),
   agelimit: 18,
