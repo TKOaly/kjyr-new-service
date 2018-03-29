@@ -68,7 +68,7 @@ export default class Person extends Model<Person> {
    * Returns a Person object which is safe to be transported to public
    * use, in this case be emmitted via websocket to the frontend
    */
-  getPublicPerson(): Person {
+  getSafeForPublic(): Person {
     return new Person({
       firstName: this.firstName,
       lastName: this.lastName,

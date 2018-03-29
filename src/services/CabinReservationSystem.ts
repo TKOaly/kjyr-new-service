@@ -41,7 +41,7 @@ class CabinReservationSystem extends EventFeeder {
    */
   registerPersonToCabin(person: Person, cabinId: Number) {
     this.bucket.set(person.reservationUUID, new BucketItem(new Date(), cabinId, person));
-    this.send(new Event('ADD', cabinId, person.getPublicPerson()));
+    this.send(new Event('ADD', cabinId, person.getSafeForPublic()));
   }
 
   /**
@@ -59,14 +59,7 @@ class CabinReservationSystem extends EventFeeder {
    */
   completeRegistration(person: Person) {
     this.bucket.delete(person.reservationUUID);
-    self.send({
-      event: 'RESERVATION_COMPLETE',
-      person: {
-        reservationId: person.reservationUUID,
-        firstname: person.firstName,
-        lastname: person.lastName
-      }
-    });
+    self.send(new Event('RESERVATION_COMPLETE', person.cabinId, person.getSafeForPublic()));
   }
 
   /**
@@ -99,7 +92,7 @@ class CabinReservationSystem extends EventFeeder {
     if (value) {
       value.person = person
       this.bucket.set(reservationUUID, value);
-      self.send(new Event('UPDATE', value.cabinId, person.getPublicPerson()))
+      self.send(new Event('UPDATE', value.cabinId, person.getSafeForPublic()))
     }
   }
 
