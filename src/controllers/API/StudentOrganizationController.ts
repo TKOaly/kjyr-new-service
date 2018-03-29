@@ -3,7 +3,7 @@ import {
 } from 'routing-controllers';
 import { Request, Response } from 'express';
 
-import { KJYRSession, KJYRRegistration } from '../../utils/KJYRSession';
+import { KJYRSession, KJYRRegistration, flashMessage } from '../../utils/KJYRSession';
 import StudentOrganization from "../../models/StudentOrganization";
 
 @JsonController('/api/studorgs')
@@ -32,7 +32,12 @@ export default class StudentOrganizationController {
   @Post('/:id')
   @Authorized('admin')
   @Redirect('/admin')
-  async updateStudorg(@Body() studorg: any, @Param('id') id: number) {
-    StudentOrganization.update(studorg, { where: { id } });
+  async updateStudorg( @Session() session: KJYRSession, @Body() studorg: any, @Param('id') id: number) {
+    try {
+      await StudentOrganization.update(studorg, { where: { id } });
+      flashMessage(session, 'success', 'Student organization updated');
+    } catch(error) {
+      flashMessage(session, 'danger', error.errors ? error.errors.map(err => err.message) : error.message);
+    }
   }
 }

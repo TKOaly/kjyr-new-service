@@ -2,7 +2,7 @@ import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore 
 import StudentOrganizations from '../models/StudentOrganization';
 import Admin from '../models/Admin';
 
-import { KJYRSession, KJYRAuth } from '../utils/KJYRSession';
+import { KJYRSession, KJYRAuth, flashMessage } from '../utils/KJYRSession';
 
 import * as bcrypt from 'bcrypt';
 /**
@@ -21,7 +21,8 @@ export default class LoginController {
     return {
       config: global.Backend.Config,
       userLanguage: session.lang,
-      locale: global.Backend.Localization[session.lang || 'fi']
+      locale: global.Backend.Localization[session.lang || 'fi'],
+      message: session.message
     }
   }
 
@@ -32,9 +33,11 @@ export default class LoginController {
     let password = body.passwd;
     let adminUser =  await Admin.find({ where: { username }, include: [StudentOrganizations] });
     // Check the password hashes.
-    if (bcrypt.compareSync(password, adminUser.passwordSalt)) {
+    if (adminUser && bcrypt.compareSync(password, adminUser.passwordSalt)) {
       session.auth = new KJYRAuth(adminUser.isAdmin ? 'admin' : 'studorg', adminUser.studentOrganization);
+      flashMessage(session, 'success', 'Logged in as ' + adminUser.username);
+    } else {
+      flashMessage(session, 'danger', 'Wrong username or password');
     }
   }
-
 }

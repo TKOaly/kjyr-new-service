@@ -1,0 +1,3 @@
+.container
+  if message != null
+    div(class=`notification is-${message.type}`)!=message.displayAndDispose()

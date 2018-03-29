@@ -6,9 +6,8 @@ html
     title= 'KJYR - Ilmoittautuminen'
   body
     include components/navbar.pug
+    include components/flash_message.pug
     .container
-      if message != null
-        div(class=`notification is-${message.type}`)!=message.displayAndDispose()
       progress(class="progress is-info is-large" value=((nStep / 6) * 100) max=100)
       .box
         if nStep > 1 && nStep < 6
