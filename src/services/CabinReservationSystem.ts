@@ -22,8 +22,8 @@ class CabinReservationSystem extends EventFeeder {
     self = this;
     setInterval(() => {
       let now = new Date();
-      for (let key in self.bucket) {
-        let registration = self.bucket[key];
+      for (let key in this.bucket.keys()) {
+        let registration = this.bucket.get(key);
         if (registration) {
           if ((now.getTime() - registration.timestamp.getTime()) >= (1000 * 60 * 3)) {
             self.deletePersonFromBucket(registration.person.reservationUUID, registration.cabinId);
