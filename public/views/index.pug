@@ -60,7 +60,7 @@ html
           each studOrg in studOrgs
             .leftstarttime=studOrg.name
               br
-            - var formated_date = new Date(studOrg.ilmo_start);
+            - var formated_date = new Date(studOrg.ilmoStart);
             - formated_date = formated_date.toString().substr(0, formated_date.toString().indexOf('GMT'));
             .rightstarttime=formated_date
         p(style='font-size: smaller;')
