@@ -11,20 +11,27 @@ export default class StudentOrganizationController {
     @Post('/')
     @Authorized('admin')
     @Redirect('/admin')
-    async addStudentOrganization( @Session() session: KJYRSession, @Body() studorg: any, @Res() response: Response) {
+    async addStudentOrganization(@Session() session: KJYRSession, @Body() studorg: any, @Res() response: Response) {
         let newStudorg = new StudentOrganization(studorg);
         newStudorg.createAdminUser(studorg.admin_password);
         try {
-            await newStudorg.validate();
-        } catch(e) {
+            await newStudorg.save();
+        } catch (e) {
             return '/admin'
         }
     }
 
     @Post('/:id/delete')
     @Authorized('admin')
-    @Redirect('admin')
-    deleteStudorg( @Param('id') id: number ) {
-        StudentOrganization.destroy({ where: { id }});
+    @Redirect('/admin')
+    deleteStudorg(@Param('id') id: number) {
+        StudentOrganization.destroy({ where: { id } });
+    }
+
+    @Post('/:id')
+    @Authorized('admin')
+    @Redirect('/admin')
+    async updateStudorg(@Body() studorg: any, @Param('id') id: number) {
+        StudentOrganization.update(studorg, { where: { id } });
     }
 }
