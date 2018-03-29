@@ -46,7 +46,7 @@ html
               br
               button(class="button" type='reset')=locale.admin_form_reset    
         each studOrg in studOrgs
-          - let postURI = '/api/studorgs/' + studOrg.id + '?vanilla=true'
+          - let postURI = '/api/studorgs/' + studOrg.id
           - let deleteURI = '/api/studorgs/' + studOrg.id + '/delete?vanilla=true'
           .box
             h1(class="title is-5")=studOrg.name
@@ -55,32 +55,32 @@ html
               input(class="input" type="text" name="name" value=studOrg.name)
               br
               label=locale.admin_contact_email
-              input(class="input" type='text' name='contact_email' value=studOrg.email)
+              input(class="input" type='text' name='email' value=studOrg.email)
               br
               label=locale.admin_contact_telephone
-              input(class="input" type='text' name='contact_telephone' value=studOrg.phone)
+              input(class="input" type='text' name='phone' value=studOrg.phone)
               br
               label=locale.admin_ilmo_start
-              - let date = moment(studOrg.ilmo_start).format('YYYY-MM-DD HH:mm');
-              input(class="input datetime" type='text' name='ilmo_start' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)
+              - let date = moment(studOrg.ilmoStart).format('YYYY-MM-DD HH:mm');
+              input(class="input datetime" type='text' name='ilmoStart' placeholder="YYYY-MM-DD HH:mm" pattern="[0-9]{4}-[0-3][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]$" value=date)
               br
               label=locale.admin_guardian_quota
               if isAdmin
-                input(class="input" type='number' name='guardian_quota' value=studOrg.guardianQuota)
+                input(class="input" type='number' name='guardianQuota' value=studOrg.guardianQuota)
               else                            
                 input(class="input" type='number' readonly='readonly' value=studOrg.guardianQuota)
               br
               label=locale.admin_cabin_quota
               if isAdmin
-                input(class="input" type='number' name='cabin_quota' value=studOrg.quota)
+                input(class="input" type='number' name='cabinQuota' value=studOrg.cabinQuota)
               else
-                input(class="input" type='number' readonly='readonly' value=studOrg.quota)
+                input(class="input" type='number' readonly='readonly' value=studOrg.cabinQuota)
               br
               label=locale.admin_cruise_cabin_price
               if isAdmin
-                input(class="input" type="number" name="cabin_price" value=studOrg.cabin_price / 100)
+                input(class="input" type="number" name="cabinPrice" value=studOrg.cabinPrice / 100)
               else
-                input(class="input" type="number" value=studOrg.cabin_price / 100 readonly)
+                input(class="input" type="number" value=studOrg.cabinPrice / 100 readonly)
               br
               button(class="button is-success" type='submit')=locale.admin_form_submit
               br
