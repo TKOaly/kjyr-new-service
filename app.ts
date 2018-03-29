@@ -17,6 +17,7 @@ import RegistrationController from './src/controllers/RegistrationController';
 
 import StudentOrganizationController from './src/controllers/API/StudentOrganizationController';
 import SessionMessageHandler from './src/utils/SessionMessageHandler';
+import PreferenceController from './src/controllers/API/PreferenceController';
 
 let databse = new Database({
   host: process.env.KJYR_DB_HOST,
@@ -66,7 +67,8 @@ createExecutor(expressDriver, {
     LoginController,
     AdminController,
     RegistrationController,
-    StudentOrganizationController
+    StudentOrganizationController,
+    PreferenceController
   ],
   classTransformer: false, // enable when es6 compatible
   authorizationChecker: async (action: Action, roles: string[]) => {
