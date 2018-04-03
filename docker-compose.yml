@@ -1,0 +1,11 @@
+version: '3'
+services:
+  kjyr:
+    env_file: 
+        - .env
+    build: .
+    command: ts-node src/index.ts
+    volumes:
+      - .:/src
+    ports:
+      - ${KJYR_DBG_PORT:-8000}:${KJYR_DBG_PORT:-8000}
