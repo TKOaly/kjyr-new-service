@@ -1,5 +1,5 @@
-FROM alpine:3.5
-FROM node:carbon-slim
+FROM node:alpine
+RUN apk add --no-cache git
 RUN apk add --no-cache yarn
 RUN mkdir /src
 WORKDIR /src
