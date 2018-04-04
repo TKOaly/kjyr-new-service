@@ -7,5 +7,6 @@ services:
     command: ts-node src/index.ts
     volumes:
       - .:/src
+      - "/var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock"
     ports:
-      - ${KJYR_DBG_PORT:-8000}:${KJYR_DBG_PORT:-8000}
+      - 127.0.0.1:${KJYR_DBG_PORT:-8001}:${KJYR_DBG_PORT:-8001}
