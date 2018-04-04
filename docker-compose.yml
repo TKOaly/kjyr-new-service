@@ -4,7 +4,7 @@ services:
     env_file: 
         - .env
     build: .
-    command: ts-node src/index.ts
+    command: ts-node src/app.ts
     volumes:
       - .:/src
       - "/var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock"
