@@ -5,4 +5,4 @@ RUN mkdir /src
 WORKDIR /src
 ADD . /src/
 RUN yarn
-RUN yarn install ts-node
+RUN yarn global add ts-node
