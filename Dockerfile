@@ -5,4 +5,5 @@ RUN mkdir /src
 WORKDIR /src
 ADD . /src/
 RUN yarn
+RUN yarn global add typescript
 RUN yarn global add ts-node
