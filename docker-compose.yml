@@ -3,7 +3,6 @@ services:
   kjyr:
     env_file: 
         - .env
-    net: host
     build: .
     command: ts-node src/index.ts
     volumes:
