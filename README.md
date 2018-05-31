@@ -1,10 +1,24 @@
+# kjyr-new-service
+
 [![Build Status](https://mattermost.tko-aly.fi/buildStatus/icon?job=mayhem)](http://mattermost.tko-aly.fi/job/mayhem/)
 
-# Mayhem
-
-KJYR registration system. 
+This repository contains source code for KJYR (Kumpulan Järjestöjen Yhteinen Risteily) registration system.
 
 **DON'T PUSH INCOMPLETE STUFF TO MASTER SINCE IT WILL BE DEPLOYED ON THE PRODUCTION SERVER**
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
+
+* [kjyr-new-service](#kjyr-new-service)
+  * [Editing site content](#editing-site-content)
+  * [Configuring constants](#configuring-constants)
+  * [Setting up a devenv](#setting-up-a-devenv)
+  * [Future improvements](#future-improvements)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Editing site content
 
@@ -14,32 +28,32 @@ Go to `src/config/` and open the `localization.js` file.
 
 Go to `src/config/` and open the `config.js` file.
 
-## Setting up a devenv
+## Setting up a development environment
 
-1. Get [Node.js](https://nodejs.org)
-2. Clone this repository
-3. Run `npm install --dev` in the repository root directory.
-4. Set up a MySQL server
-    - Create a new schema
-5. Define the required ENV variables
-    - KJYR\_DB_HOST
-    - KJYR\_DB_USER
-    - KJYR\_DB_PASSWORD
-    - KJYR\_DB_NAME
-    - KJYR\_COOKIE_SECRET
-    - KJYR\_DBG_PORT
-6. Run `npm start` (Sometimes this has to be ran twice to create the DB relations correctly)
-7. Run `npm run-script create-admin` to create a admin user.
+1.  Install yarn
+2.  Clone this repository
+3.  Run `yarn --dev` in the repository root directory.
+4.  Set up a MySQL server
+    * Create a new schema
+5.  Copy `.env.example` to `.env` and define the required ENV variables:
+    * KJYR_DB_HOST
+    * KJYR_DB_USER
+    * KJYR_DB_PASSWORD
+    * KJYR_DB_NAME
+    * KJYR_COOKIE_SECRET
+    * KJYR_DBG_PORT
+6.  Run `yarn start` (Sometimes this has to be ran twice to create the DB relations correctly)
+7.  Run `yarn create-admin` to create a admin user.
 
-## Future imporvements
+## Future improvements
 
-- Use MongoDB for saving site content, and implement editing into the admin control panel.
-- Save reservations into the database.
-- Table reservations
-- Buying multiple breakfasts or buffets
-- Use async/await
-- Just refactor everything to reduce internal errors and crashes
+* Use MongoDB for saving site content, and implement editing into the admin control panel.
+* Save reservations into the database.
+* Table reservations
+* Buying multiple breakfasts or buffets
+* Use async/await
+* Just refactor everything to reduce internal errors and crashes
 
-- TypeScript
-- Folder structure (MVC)
-- Single database class
+* TypeScript
+* Folder structure (MVC)
+* Single database class

@@ -1,8 +1,10 @@
 old/*
-node_modules/*
+node_modules
 .vscode/
 admin_user.txt
 logs/
 .env
 dist/
 mayhem.sqlite
+.DS_store
+package-lock.json
