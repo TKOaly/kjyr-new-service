@@ -36,6 +36,7 @@ Go to `src/config/` and open the `config.js` file.
 4.  Set up a MySQL server
     * Create a new schema
 5.  Copy `.env.example` to `.env` and define the required ENV variables:
+    * PORT
     * KJYR_DB_HOST
     * KJYR_DB_USER
     * KJYR_DB_PASSWORD

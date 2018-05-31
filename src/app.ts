@@ -1,19 +1,18 @@
+require("dotenv").config();
+
 import "reflect-metadata";
 import { createExecutor, ExpressDriver, Action } from "routing-controllers";
-import { MySQLSessionStore } from "express-mysql-session";
+// import { MySQLSessionStore } from "express-mysql-session";
 import * as express from "express";
 import Database from "./Database";
 import * as session from "express-session";
+import * as helmet from "helmet";
 
-require("dotenv").config();
-
-const helmet = require("helmet");
-
+// Controllers
 import IndexController from "./controllers/IndexController";
 import LoginController from "./controllers/LoginController";
 import AdminController from "./controllers/AdminController";
 import RegistrationController from "./controllers/RegistrationController";
-
 import StudentOrganizationController from "./controllers/API/StudentOrganizationController";
 import SessionMessageHandler from "./utils/SessionMessageHandler";
 import PreferenceController from "./controllers/API/PreferenceController";
@@ -92,4 +91,6 @@ createExecutor(expressDriver, {
   }
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Listeting at %d", process.env.PORT || 3000);
+});
