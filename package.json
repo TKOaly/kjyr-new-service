@@ -17,9 +17,10 @@
     "nodemailer": "^4.0.1",
     "pug": "^2.0.0-beta11",
     "sequelize": "3.30.2",
-    "sqlite3": "^3.1.13",
+    "sqlite3": "^4.0.0",
     "winston": "^2.3.1",
-    "ws": "2.2.3"
+    "ws": "2.2.3",
+    "snyk": "^1.83.0"
   },
   "devDependencies": {
     "@types/node": "^8.0.57",
@@ -33,6 +34,9 @@
     "start": "node dist/app.js",
     "clean": "rm -rf dist",
     "test": "mocha",
-    "create-admin": "node ./dist/scripts/create_admin_user.js"
-  }
+    "create-admin": "node ./dist/scripts/create_admin_user.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
