@@ -1,43 +1,56 @@
-import { Controller, Render, Get, Post, Session, Redirect, Body, Req, UseBefore } from 'routing-controllers';
-import StudentOrganizations from '../models/StudentOrganization';
-import Admin from '../models/Admin';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Redirect,
+  Render,
+  Session,
+} from "routing-controllers";
+import Admin from "../models/Admin";
+import StudentOrganizations from "../models/StudentOrganization";
 
-import { KJYRSession, KJYRAuth, flashMessage } from '../utils/KJYRSession';
+import { flashMessage, KJYRAuth, KJYRSession } from "../utils/KJYRSession";
 
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from "bcrypt";
 /**
  * Controller for handling login actions to the admin control panel
  */
 
-@Controller('/login')
+@Controller("/login")
 export default class LoginController {
-
-  @Get('/')
-  @Render('login')
-  getAdminView( @Session() session: KJYRSession) {
+  @Get("/")
+  @Render("login")
+  public getAdminView(@Session() session: KJYRSession) {
     if (session.auth && session.auth.role) {
-      return '/admin';
+      return "/admin";
     }
     return {
       config: global.Backend.Config,
       userLanguage: session.lang,
-      locale: global.Backend.Localization[session.lang || 'fi'],
-      message: session.message
-    }
+      locale: global.Backend.Localization[session.lang || "fi"],
+      message: session.message,
+    };
   }
 
-  @Post('/')
-  @Redirect('/admin')
-  async login( @Session() session: KJYRSession, @Body() body: any) {
-    let username = body.username;
-    let password = body.passwd;
-    let adminUser =  await Admin.find({ where: { username }, include: [StudentOrganizations] });
+  @Post("/")
+  @Redirect("/admin")
+  public async login(@Session() session: KJYRSession, @Body() body: any) {
+    const username = body.username;
+    const password = body.passwd;
+    const adminUser = await Admin.find({
+      where: { username },
+      include: [StudentOrganizations],
+    });
     // Check the password hashes.
     if (adminUser && bcrypt.compareSync(password, adminUser.passwordSalt)) {
-      session.auth = new KJYRAuth(adminUser.isAdmin ? 'admin' : 'studorg', adminUser.studentOrganization);
-      flashMessage(session, 'success', 'Logged in as ' + adminUser.username);
+      session.auth = new KJYRAuth(
+        adminUser.isAdmin ? "admin" : "studorg",
+        adminUser.studentOrganization,
+      );
+      flashMessage(session, "success", "Logged in as " + adminUser.username);
     } else {
-      flashMessage(session, 'danger', 'Wrong username or password');
+      flashMessage(session, "danger", "Wrong username or password");
     }
   }
 }

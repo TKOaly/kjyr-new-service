@@ -1,20 +1,19 @@
-import * as WebSocket from 'ws';
-import Person from '../models/Person';
+import * as WebSocket from "ws";
+import Person from "../models/Person";
 /**
  * Dope class for sending real-time events via websocket connection
  */
 export class EventFeeder {
-  wss: WebSocket.Server;
-  constructor() {}
+  public wss: WebSocket.Server;
 
   /**
    * Creates the websocket connection
-   * @param {String} path ws path 
+   * @param {String} path ws path
    */
-  init(path: string) {
+  public init(path: string) {
     this.wss = new WebSocket.Server({
       port: 4200,
-      path
+      path,
     });
   }
 
@@ -22,19 +21,19 @@ export class EventFeeder {
    * Sends an event
    * @param {Object} data Will be stringyfied to JSON
    */
-  send(data: Event) {
+  public send(data: Event) {
     this.wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(data));
       }
-    });    
+    });
   }
 }
 
 export class Event {
   constructor(
     public event: string,
-    public cabinId: Number,
-    public person: Person | { reservationUUID: string }
+    public cabinId: number,
+    public person: Person | { reservationUUID: string },
   ) {}
 }

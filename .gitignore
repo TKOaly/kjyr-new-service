@@ -9,3 +9,5 @@ mayhem.sqlite
 .DS_store
 package-lock.json
 yarn-error.lock
+coverage
+.nyc_output

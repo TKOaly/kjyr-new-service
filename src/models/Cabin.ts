@@ -1,22 +1,25 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany } from 'sequelize-typescript';
-import StudentOrganization from './StudentOrganization';
-import Person from './Person';
-
-
+import {
+  BelongsTo,
+  Column,
+  ForeignKey,
+  HasMany,
+  Model,
+  Table,
+} from "sequelize-typescript";
+import Person from "./Person";
+import StudentOrganization from "./StudentOrganization";
 
 @Table({ timestamps: true })
 export default class Cabin extends Model<Cabin> {
-
-  @Column
-  price: number;
+  @Column public price: number;
 
   @ForeignKey(() => StudentOrganization)
   @Column
-  studOrgId: number;
+  public studOrgId: number;
 
   @BelongsTo(() => StudentOrganization)
-  studentOrganization: StudentOrganization;
+  public studentOrganization: StudentOrganization;
 
   @HasMany(() => Person)
-  persons: Person[];
+  public persons: Person[];
 }

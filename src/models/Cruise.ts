@@ -1,21 +1,18 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany } from 'sequelize-typescript';
-
+import {
+  Column,
+  Model,
+  Table,
+} from "sequelize-typescript";
 
 @Table({ timestamps: false })
 export default class Cruise extends Model<Cruise> {
+  @Column public ship: string;
 
-  @Column
-  ship: string;
+  @Column public departure1: Date;
 
-  @Column
-  departure1: Date;
+  @Column public arrival1: Date;
 
-  @Column
-  arrival1: Date;
+  @Column public departure2: Date;
 
-  @Column
-  departure2: Date;
-
-  @Column
-  arrival2: Date;
+  @Column public arrival2: Date;
 }

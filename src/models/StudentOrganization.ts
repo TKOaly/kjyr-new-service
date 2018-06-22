@@ -1,57 +1,64 @@
-import { Table, Column, Model, BelongsTo, ForeignKey, HasOne, HasMany, BelongsToMany, AllowNull, Length } from 'sequelize-typescript';
-import Admin from './Admin';
-import Person from './Person';
-import Cabin from './Cabin';
+import {
+  AllowNull,
+  Column,
+  HasMany,
+  HasOne,
+  Length,
+  Model,
+  Table,
+} from "sequelize-typescript";
+import Admin from "./Admin";
+import Cabin from "./Cabin";
+import Person from "./Person";
 
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from "bcrypt";
 
 @Table({ timestamps: true })
 export default class StudentOrganization extends Model<StudentOrganization> {
-
   @AllowNull(false)
   @Length({ min: 1 })
   @Column
-  name: string;
+  public name: string;
 
   @AllowNull(false)
   @Column
-  quota: number;
+  public quota: number;
 
   @AllowNull(false)
   @Column
-  email: string;
+  public email: string;
 
   @AllowNull(false)
   @Column
-  phone: string;
+  public phone: string;
 
   @AllowNull(false)
   @Column
-  guardianQuota: number;
+  public guardianQuota: number;
 
   @AllowNull(false)
   @Column
-  cabinQuota: number;
+  public cabinQuota: number;
 
   @AllowNull(false)
   @Column
-  cabinPrice: number;
+  public cabinPrice: number;
 
   @AllowNull(false)
   @Column
-  ilmoStart: Date;
+  public ilmoStart: Date;
 
   @HasOne(() => Admin)
-  admin: Admin;
+  public admin: Admin;
 
   @HasMany(() => Person)
-  persons: Person[];
+  public persons: Person[];
 
   @HasMany(() => Cabin)
-  cabins: Cabin[];
+  public cabins: Cabin[];
 
-  createAdminUser(password: string): Admin {
-    let admin = new Admin();
+  public createAdminUser(password: string): Admin {
+    const admin = new Admin();
     admin.isAdmin = false;
     admin.studOrgId = this.id;
     admin.passwordSalt = bcrypt.hashSync(password, 10);

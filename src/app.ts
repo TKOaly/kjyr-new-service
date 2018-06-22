@@ -1,36 +1,36 @@
 require("dotenv").config();
 
-import "reflect-metadata";
-import { createExecutor, ExpressDriver, Action } from "routing-controllers";
 // import { MySQLSessionStore } from "express-mysql-session";
 import * as express from "express";
-import Database from "./Database";
 import * as session from "express-session";
 import * as helmet from "helmet";
+import "reflect-metadata";
+import { Action, createExecutor, ExpressDriver } from "routing-controllers";
+import Database from "./Database";
 
 // Controllers
+import AdminController from "./controllers/AdminController";
+import PreferenceController from "./controllers/API/PreferenceController";
+import StudentOrganizationController from "./controllers/API/StudentOrganizationController";
 import IndexController from "./controllers/IndexController";
 import LoginController from "./controllers/LoginController";
-import AdminController from "./controllers/AdminController";
 import RegistrationController from "./controllers/RegistrationController";
-import StudentOrganizationController from "./controllers/API/StudentOrganizationController";
 import SessionMessageHandler from "./utils/SessionMessageHandler";
-import PreferenceController from "./controllers/API/PreferenceController";
 
-let databse = new Database({
+const databse = new Database({
   host: process.env.KJYR_DB_HOST,
   username: process.env.KJYR_DB_USER,
   password: process.env.KJYR_DB_PASSWORD,
   database: process.env.KJYR_DB_NAME,
   port: Number(process.env.KJYR_DB_PORT),
-  dialect: "mysql"
+  dialect: "mysql",
 });
 
 global.Backend = {
-  Config: require("./src/config/config.js"),
-  Localization: require("./src/config/localization.js"),
+  Config: require("./config/config.js"),
+  Localization: require("./config/localization.js"),
   Logger: null,
-  Models: databse.sequelize.models
+  Models: databse.sequelize.models,
 };
 
 const expressDriver = new ExpressDriver();
@@ -53,9 +53,9 @@ app.use(
     secret: process.env.KJYR_COOKIE_SECRET,
     cookie: {
       secure: false,
-      maxAge: 120 * 60000
-    }
-  })
+      maxAge: 120 * 60000,
+    },
+  }),
 );
 app.use(new SessionMessageHandler().use);
 app.locals.moment = require("moment");
@@ -68,7 +68,7 @@ createExecutor(expressDriver, {
     AdminController,
     RegistrationController,
     StudentOrganizationController,
-    PreferenceController
+    PreferenceController,
   ],
   classTransformer: false, // enable when es6 compatible
   authorizationChecker: async (action: Action, roles: string[]) => {
@@ -85,12 +85,14 @@ createExecutor(expressDriver, {
         return true;
       }
     } else if (roles[0] === "admin") {
-      if (action.request.session.auth.role === "admin") return true;
+      if (action.request.session.auth.role === "admin") { return true; }
     }
     return false;
-  }
+  },
 });
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Listeting at %d", process.env.PORT || 3000);
 });
+
+export default app;

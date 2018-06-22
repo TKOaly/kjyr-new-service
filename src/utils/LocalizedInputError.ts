@@ -1,12 +1,11 @@
-import * as localization from '../config/localization.js';
+import * as localization from "../config/localization.js";
 
 export default class LocalizedInputError extends Error {
-
   constructor(private errorKey: string) {
-    super('');
+    super("");
   }
 
-  getLocalizedErrorMessage(locale) {
+  public getLocalizedErrorMessage(locale) {
     return localization[locale][this.errorKey];
   }
 }
